@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <div class="row">
+        <div class="col-md-3" style="border:1px solid black; ">
+            <p>New Chapter Name:
+                <input type="text" id="newChapterName">
+                <button type="button" id="btnNewChapter">Add</button>
+            </p>
+
+<!--            <div data-ng-repeat="x in chapnames track by $index">-->
+<!--
+                <div class="btn" style="border:1px solid black; margin: 5px; width:70%">
+                    {{x}}
+                </div>
+-->
+<!--                <input type="button" value="Delete" data-ng-click="deleteChapter($index)">-->
+
+<!--            </div>-->
+            <!--            <button type="button" data-ng-click="deletebtn($index)">Del</button>-->
+
+        </div>
+        <div class="col-md-6" style="border:1px solid black; ">
+            <div class="row">
+                <div class="col-md-2" style="text-align: center;">
+                    <button>previous</button>
+                </div>
+                <div class="col-md-8" style="text-align: center;">
+                    <img id="contentimg1" class="thumb" src="" />
+                    <img id="contentimg2" class="thumb" src="" />
+                    <img id="contentimg3" class="thumb" src="" />
+                    <img id="contentimg4" class="thumb" src="" />
+                    <img id="contentimg5" class="thumb" src="" />
+                    <img id="contentimg6" class="thumb" src="" />
+                    <img id="contentimg7" class="thumb" src="" />
+                    <img id="contentimg8" class="thumb" src="" />
+                    <img id="contentimg9" class="thumb" src="" />
+                    <img id="contentimg10" class="thumb" src="" />
+                    <output id="list"></output>
+                    <input type="file" id="files" name="files[]" multiple />
+
+                </div>
+                <div class="col-md-2" style="text-align: center;">
+                    <button>next</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3" style="border:1px solid black; text-align: center;">
+            <!--            <input type="file" id="files" name="files[]" multiple />-->
+            <button>Delete</button>
+            <button data-ng-click="clear()">Clear</button>
+        </div>
+    </div>
+
+    <!--    new-->
+    <input type="file" id="pictureTest" capture>
+
+    <h2>Test Image Below</h2>
+    <input type="number" id="recordToLoad"> <button id="testImageBtn">Test</button>
+
+    <img id="testImage">
+
+    <script>
+    </script>
+    <!-- Angular JS -->
+    <script src="js/angular.min.js"></script>
+    <!-- Your Controller -->
+    <script src="js/textbook-app2.js"></script>
+
+</body>
+
+</html>
