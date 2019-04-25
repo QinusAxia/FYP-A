@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<style>
+    .thumb {
+        height: 300px;
+        margin: 10px 5px 0 0;
+    }
+
+</style>
+
+<body>
+
+    <div class="row">
+        <div class="col-md-3" style="border:1px solid black; ">
+            <p>New Chapter Name:
+                <input type="text" id="newChapterName">
+                <button type="button" id="btnNewChapter">Add</button>
+            </p>
+            <div id="btn"></div>
+
+        </div>
+        <div class="col-md-6" style="border:1px solid black; ">
+            <div class="row">
+
+                <h1 id="chapter" style="text-align: center">Select Your Chapter</h1>
+                <div class="col-md-12" style="text-align: center;">
+                    <p>Go to page: </p>
+                    <div id="recordToLoad"></div>
+                    <br>
+                    <img id="testImage" class="thumb">
+                    <br>
+                    <button id="previousPage">Previous</button><button id="nextPage">Next</button>
+                    <h2 id="page" style="text-align: center">Page:</h2>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-3" style="border:1px solid black; text-align: center;">
+            <!--            <input type="file" id="files" name="files[]" multiple />-->
+<!--
+            <input type="text" id="editChapterName">
+            <button type="button" id="btnEditChapter">Edit Chapter Name</button>
+-->
+         <h1>Edit Textbook</h1>
+          <p>Add New Page: </p>
+           <input type="file" id="pictureTest" capture>
+           <br>
+           <p>
+            <button id="delChapter">Delete Chapter</button>
+            <button id="delPage">Delete Page</button>
+            </p>
+<!--            <button>Clear</button>-->
+        </div>
+    </div>
+
+    <!--    new-->
+    <!--    <input type="file" id="pictureTest" capture>-->
+
+    <!--
+    <h2>Test Image Below</h2>
+    <input type="number" id="recordToLoad"> <button id="testImageBtn">Test</button>
+
+    <img id="testImage">
+-->
+
+    <script>
+    </script>
+    <!-- Angular JS -->
+    <script src="js/angular.min.js"></script>
+    <!-- Your Controller -->
+    <script src="js/textbook-app2.js"></script>
+
+</body>
+
+</html>
