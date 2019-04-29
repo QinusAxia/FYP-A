@@ -1,20 +1,8 @@
 
 let db = null;
 
-function createDB () { //this function is called when ever a new quiz is made
-
-  //   var db;
-// var request = indexedDB.open("MyTestDatabase");
-// request.onerror = function(event) {
-//     // Generic error handler for all errors targeted at this database's
-// // requests!
-//   console.log("Database error code: " + event.target.errorCode);
-// };
-// request.onsuccess = function(event) {
-//   db = event.target.result;
-// };
-
-  const dbname = "QuizMaker";
+function createDB (quizName) { //this function is called when ever a new quiz is made
+  const dbname = quizName;
   const dbVersion = 1;
   const request = indexedDB.open(dbname,dbVersion);
 
@@ -54,9 +42,7 @@ $("#addTitle").submit(function() {
     var questionID = title.replace(/\s/g, '') + increment;
     $("div.newQuest").append("<form class='addQuestion' onsubmit='return false'> <div class='question'> <div> <p> Question " + increment + "</p><label for='test'> Marks<input type='number' id='test'></label></div> <div class='col-md-12'><input type='text' name='questionBox' placeholder='Begin Typing Question here' class='form-control input-lg'></div> <div class='col-md-8'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect' value='A' checked> </div> </div> <input type='text' id='" + questionID + "A' name='answer' placeholder='Option A' class='form-control A'> </div> </div> <div class='col-md-8'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect' value='B'> </div> </div> <input type='text' id='" + questionID + "B' name='answer' placeholder='Option B' class='form-control B'> </div> </div> <div class='col-md-8'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect' value='C'> </div> </div> <input type='text' id='" + questionID + "C' name='answer' placeholder='Option C' class='form-control C'> </div> </div> <div class='col-md-8'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect' value='D'> </div> </div> <input type='text' id='" + questionID + "D' name='answer' placeholder='Option D' class='form-control D'> </div> </div> <div class='col-md-12'> <button type='submit' class='saveQuestionBtn btn btn-primary'>Save Question</button> <button type='reset' class='btn btn-secondary'> Reset Question</button> </div> </div> </form>");
     console.log(questionID);
-
-    createDB();
-
+    createDB(title);
   } else {
     alert("Title cannot be empty");
   }
@@ -72,7 +58,6 @@ $("#newStuff").click(function(){
 });
 
 $(document).on("click", "button.saveQuestionBtn", function() {
-
   //get the values from the input
   var quesID = increment;
   var ques = $(this).parent().parent().find("input[name=questionBox]").val();
@@ -96,8 +81,10 @@ $(document).on("click", "button.saveQuestionBtn", function() {
     marks: mark
   }
   const tx = db.transaction("quizTitle", "readwrite");
-  tx.onerror = e => alert( ` Error! ${e.target.error}  `);
+  tx.onerror = function(e) { 
+    alert( ` Error! ${e.target.error}  `);
+  }
   var quizQuestion = tx.objectStore("quizTitle");
-  quizQuestion.add(fullquestion, quesID);
+  quizQuestion.put(fullquestion, quesID);
 
 });
