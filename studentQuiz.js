@@ -11,8 +11,8 @@ request.onsuccess = function(event) {
     db = event.target.result
     console.log("Database " + dbname + " version " + dbVersion+ " has been succesfully opened");          
   
-    // This line will log the version of the connected database, which should be
-    // an object that looks like { ['my-store-name'] }
-    
-    // console.log(db.objectStoreNames);
   };
+
+function loadAllQues() {
+    
+}
