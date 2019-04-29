@@ -5,44 +5,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Quiz Maker</title>
     <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="custom.css">
     <script src="jquery-3.4.0.js"></script>
 </head>
+
 <body>
     <div class="container">
         <h1>Quiz Maker</h1>
-        <p>
-            <label for="title">Title: <input type="text" name="QuizTitle" id="title"></label>
-            <button type="button" class="btn btn-primary">Deploy Quiz</button>
-        </p>
-        <form id="addQuestion" onsubmit="return false">
-            <div class="question">
-                <p>Question 1</p>
-                <div class="col-md-12">
-                    <input type="text" name="questionBox" placeholder="Begin Typing Question here"
-                        class="form-control input-lg"></div>
-                <div class="col-md-8"><input type="text" id="A" name="answer" placeholder="Option A"
-                        class="form-control"></div>
-                <div class="col-md-8"><input type="text" id="B" name="answer" placeholder="Option B"
-                        class="form-control"></div>
-                <div class="col-md-8"><input type="text" id="C" name="answer" placeholder="Option C"
-                        class="form-control"></div>
-                <div class="col-md-8"><input type="text" id="D" name="answer" placeholder="Option D"
-                        class="form-control"></div>
-                <div class="col-md-12"><button type="submit" id="saveQuestionBtn" class="btn btn-primary">Save
-                        Question</button></div>
+        <p>Please give this quiz a name/title first. The name should not contain special characters like comma or
+            apostrophy</p>
+        <form id="addTitle" onsubmit="return false">
+            <div class="input-group mb-3">
+                <input id="quizTitleVal" type="text" class="form-control" placeholder="Quiz Title"
+                    aria-label="Quiz Title">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" type="submit">Create Quiz</button>
+                </div>
             </div>
         </form>
         <div class="newQuest"></div>
         <button class="btn btn-outline-primary" id="newStuff">Create new Question</button>
-
-
     </div>
 </body>
 <script src="bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
 <script src="localforage.min.js"></script>
 <script src="quizMaker.js"></script>
 
+<!-- 
+<form class='addQuestion' onsubmit='return false'>
+        <div class='question'>    
+            <div> <p> Question " + increment + "</p><label for='test'>  Marks<input type='number' id='test'></label></div> 
+            <div class='col-md-12'><input type='text' name='questionBox' placeholder='Begin Typing Question here' class='form-control input-lg'></div>
+            <div class='col-md-8'>
+                <div class='input-group'>
+                    <div class='input-group-prepend'>
+                        <div class='input-group-text'>
+                            <input type='radio' name='radioCorrect' value='A' checked>
+                        </div>
+                    </div>
+                    <input type='text' id='" + questionID + "A' name='answer' placeholder='Option A' class='form-control A'>
+                </div>
+            </div>
+    
+            <div class='col-md-8'>
+                <div class='input-group'>
+                    <div class='input-group-prepend'>
+                        <div class='input-group-text'>
+                            <input type='radio' name='radioCorrect' value='B'>
+                        </div>
+                    </div>
+                    <input type='text' id='" + questionID + "B' name='answer' placeholder='Option B' class='form-control B'>
+                </div>
+            </div>
+    
+            <div class='col-md-8'>
+                <div class='input-group'>
+                    <div class='input-group-prepend'>
+                        <div class='input-group-text'>
+                            <input type='radio' name='radioCorrect' value='C'>
+                        </div>
+                    </div>
+                    <input type='text' id='" + questionID + "C' name='answer' placeholder='Option C' class='form-control C'>
+                </div>
+            </div>
+    
+            <div class='col-md-8'>
+                <div class='input-group'>
+                    <div class='input-group-prepend'>
+                        <div class='input-group-text'>
+                            <input type='radio' name='radioCorrect' value='D'>
+                        </div>
+                    </div>
+                    <input type='text' id='" + questionID + "D' name='answer' placeholder='Option D' class='form-control D'>
+                </div>
+            </div>
+    
+            <div class='col-md-12'>
+                <button type='submit' class='saveQuestionBtn btn btn-primary'>Save Question</button> <button type='reset' class='btn btn-secondary'> Reset Question</button>
+            </div>
+        </div>
+    </form> -->
 </html>
+
+
