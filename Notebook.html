@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Notebook</title>
     <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/notebook.css">
     <script src="jquery-3.4.0.js"></script>
@@ -13,64 +13,88 @@
 <div class="container-fluid fill-height">
 
     <h1>NOTEBOOK MODULE</h1>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-          
-            <div class="collapse navbar-collapse" id="navbarsExample08">
-              <ul class="navbar-nav">
-                <li class="nav-item active">
-                  <a class="navbar-brand" href="#">Tools<span class="sr-only">(current)</span></a>
-                </li>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarsExample08">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="navbar-brand" href="#">Tools<span class="sr-only">(current)</span></a>
+          </li>
 
-                <!-- <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="dropdownPen" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pen Type</a>
-                    <div class="dropdown-menu bg-light" aria-labelledby="dropdownColor">
-                      <button type="button" class="penType btn btn-outline-dark" id="pen" onclick="PenType('pen')">Pen</button>
-                      <button type="button" class="penType btn btn-outline-dark" id="highlight" onclick="PenType('highlight')">HighLight</button>
-                      <div class="circle" id="pen" style="background-color: black;" onclick="PenType(this)"></div>
-                      <div class="circle" id="highlight" style="background-color: blue;" onclick="PenType(this)"></div>
-                    </div>
-                </li> -->
+          <!-- <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdownPen" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pen Type</a>
+              <div class="dropdown-menu bg-light" aria-labelledby="dropdownColor">
+                <button type="button" class="penType btn btn-outline-dark" id="pen" onclick="PenType('pen')">Pen</button>
+                <button type="button" class="penType btn btn-outline-dark" id="highlight" onclick="PenType('highlight')">HighLight</button>
+                <div class="circle" id="pen" style="background-color: black;" onclick="PenType(this)"></div>
+                <div class="circle" id="highlight" style="background-color: blue;" onclick="PenType(this)"></div>
+              </div>
+          </li> -->
 
-                <li class="nav-item">
-                    <button type="button" id="pen" class="btn btn-outline-light" onclick="PenType(this)">Pen</button>
-                </li>
+          <li class="nav-item">
+              <button type="button" id="pen" class="btn btn-outline-light" onclick="PenType(this)">Pen</button>
+          </li>
 
-                <li class="nav-item">
-                    <button type="button" id="highlight" class="btn btn-outline-light" onclick="PenType(this)">Highlight</button>
-                </li>
+          <li class="nav-item">
+              <button type="button" id="highlight" class="btn btn-outline-light" onclick="PenType(this)">Highlight</button>
+          </li>
 
-                <li class="nav-item">
-                    <button type="button" id="eraser" class="btn btn-outline-light" onclick="PenType(this)">Eraser</button>
-                </li>
-                  
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="dropdownColor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Color</a>
-                  <div class="dropdown-menu bg-light" aria-labelledby="dropdownColor">
-                      <div class="circle" id="black" style="background-color: black;" onclick="PenColor(this)"></div>
-                      <div class="circle" id="blue" style="background-color: blue;" onclick="PenColor(this)"></div>
-                      <div class="circle" id="green" style="background-color: green;" onclick="PenColor(this)"></div>
-                      <div class="circle" id="yellow" style="background-color: yellow;" onclick="PenColor(this)"></div>
-                      <div class="circle" id="orange" style="background-color: orange;" onclick="PenColor(this)"></div>
-                      <div class="circle" id="red" style="background-color: red;" onclick="PenColor(this)"></div>
-                  </div>
-                </li>
-
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="dropdownPaper" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Paper Type</a>
-                  <div class="dropdown-menu bg-dark" aria-labelledby="dropdownColor">
-                    <button type="button" class="btn btn-outline-warning" onclick="ChangeBackground()">Lines Paper</button>                  
-                    <button type="button" class="btn btn-outline-warning" onclick="ChangeBackground2()">Blank Paper</button>
-                  </div>
-                </li>
-              </ul>
+          <li class="nav-item">
+              <button type="button" id="eraser" class="btn btn-outline-light" onclick="PenType(this)">Eraser</button>
+          </li>
+            
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdownColor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Color</a>
+            <div class="dropdown-menu bg-light" aria-labelledby="dropdownColor">
+                <div class="circle" id="black" style="background-color: black;" onclick="PenColor(this)"></div>
+                <div class="circle" id="blue" style="background-color: blue;" onclick="PenColor(this)"></div>
+                <div class="circle" id="green" style="background-color: green;" onclick="PenColor(this)"></div>
+                <div class="circle" id="yellow" style="background-color: yellow;" onclick="PenColor(this)"></div>
+                <div class="circle" id="orange" style="background-color: orange;" onclick="PenColor(this)"></div>
+                <div class="circle" id="red" style="background-color: red;" onclick="PenColor(this)"></div>
             </div>
-          </nav>
+          </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="dropdownPaper" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Paper Type</a>
+            <div class="dropdown-menu bg-dark" aria-labelledby="dropdownColor">
+              <button type="button" class="btn btn-outline-warning" onclick="ChangeBackground()">Lines Paper</button>                  
+              <button type="button" class="btn btn-outline-warning" onclick="ChangeBackground2()">Blank Paper</button>
+            </div>
+          </li>
+        </ul>
+
+        <button type="button" id="save" class="btn btn-outline-success">Save Page</button>
+      </div>
+    </nav>
+
     <div id="parentCanvas">
       <canvas id="myCanvas"></canvas>
     </div>
+
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li>
+        <li class="page-item"><a class="page-link text-secondary" href="#">1</a></li>
+        <li class="page-item"><a class="page-link text-secondary" href="#">2</a></li>
+        <li class="page-item"><a class="page-link text-secondary" href="#">3</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    
 </div>
 <script src="bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
 <script src="bootstrap-4.3.1-dist/js/notebook.js"></script>

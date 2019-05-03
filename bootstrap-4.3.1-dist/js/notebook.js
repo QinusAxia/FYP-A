@@ -8,25 +8,12 @@ function prepareContext(canvasElement) {
  
   let context = canvasElement.getContext("2d");
 	context.scale(dpr, dpr);
-	
-	// for (i = 80; i < canvasElement.height; i += 80) 
-	//      {
-	// 	   context.moveTo(10, i);
-	// 	   context.lineTo(canvasElement.width - 10, i);
-	// 	   context.stroke();
-	// 	  }
-    //  for (i = 10; i <400; i += 20) 
-	  //    {
-		//    context.moveTo(i, 0);
-		//    context.lineTo(i,canvasElement.width/2);
-		//    context.stroke();
-		//   }
 
   return context;
 }
 
 function ChangeBackground(){
-	document.getElementById("myCanvas").style.background = 'repeating-linear-gradient( 0deg, rgb(158, 158, 104), rgb(158, 158, 104) 5px, lightgoldenrodyellow  5px,lightgoldenrodyellow 80px)';
+	document.getElementById("myCanvas").style.background = 'repeating-linear-gradient( 0deg, rgb(158, 158, 104), rgb(158, 158, 104) 5px, lightgoldenrodyellow  5px,lightgoldenrodyellow 75px)';
 }
 
 function ChangeBackground2(){
@@ -112,6 +99,12 @@ let theCanvas = document.getElementById("myCanvas");
 let theContext = prepareContext(theCanvas);
 let shouldDraw = false;
 
+//TOUCH LISTENER
+theCanvas.addEventListener("touchstart", startT, false);
+theCanvas.addEventListener("touchend", endT, false);
+theCanvas.addEventListener("touchmove", moveT, false);
+
+//MOUSE LISTENER
 theCanvas.addEventListener("mousedown", start);
 theCanvas.addEventListener("mouseup", end);
 theCanvas.addEventListener("mousemove", move, false);
@@ -121,13 +114,15 @@ theCanvas.addEventListener("mousemove", move, false);
 // });
 
  
-function clearCanvas(context) {
-  context.clearRect(0, 0, context.canvas.width, context.canvas.height);  
-}
+// function clearCanvas(context) {
+//   context.clearRect(0, 0, context.canvas.width, context.canvas.height);  
+// }
 
+// MOUSE EVENTS
 function start(event) {
   if (event.button === MAIN_MOUSE_BUTTON) {
     shouldDraw = true;
+		
 		setLineProperties(theContext);
 
 		theContext.beginPath();
@@ -149,7 +144,47 @@ function move(event) {
   if (shouldDraw) {
     let elementRect = event.target.getBoundingClientRect();
     theContext.lineTo(event.clientX - elementRect.left, event.clientY - elementRect.top);
-	theContext.stroke()
+		theContext.stroke()
 
   }
 }
+
+//TOUCH EVENTS
+function startT(event) {
+	// event.preventDefault();
+
+	shouldDraw = true;
+	
+	setLineProperties(theContext);
+
+	theContext.beginPath();
+
+	let elementRect = event.target.getBoundingClientRect();
+	theContext.moveTo(event.touches[0].clientX - elementRect.left, event.touches[0].clientY - elementRect.top);
+
+	console.log(PenType(mode));
+}
+
+function endT(event) {
+  if (event.touches.length == 1) {
+		// event.preventDefault();
+    shouldDraw = false;
+  }
+}
+
+function moveT(event) {
+  if (shouldDraw) {
+		// event.preventDefault();
+
+    let elementRect = event.target.getBoundingClientRect();
+    theContext.lineTo(event.touches[0].clientX - elementRect.left, event.touches[0].clientY - elementRect.top);
+		theContext.stroke()
+  }
+}
+
+//SAVING FUNCTION
+// var button = document.getElementById('save');
+// button.addEventListener('click', function (e) {
+//     var dataURL = canvas.toDataURL('image/png');
+//     button.href = dataURL;
+// });
