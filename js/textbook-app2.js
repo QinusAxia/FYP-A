@@ -1,8 +1,6 @@
 /*jslint white:true*/
 /*global angular*/
 
-
-
 let db;
 let dbVersion1 = 1;
 var dbVersion;
