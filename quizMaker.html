@@ -17,7 +17,7 @@
         <form id="addTitle" onsubmit="return false">
             <div class="input-group mb-3">
                 <input id="quizTitleVal" type="text" class="form-control" placeholder="Quiz Title"
-                    aria-label="Quiz Title">
+                    aria-label="Quiz Title" value="">
                 <div class="input-group-append">
                     <button class="btn btn-outline-primary" type="submit">Create Quiz</button>
                 </div>
@@ -25,8 +25,14 @@
         </form>
         <div class="newQuest"></div>
         <button class="btn btn-outline-primary" id="newStuff">Create new Question</button>
+        <hr>
+        <button style="display:inline;" class="btn btn-outline-primary" id="exportjsonfile">Convert</button>
+        <div style="display:inline;" id="downloadbtn"></div>
+        <hr>
+        <button class="btn btn-outline-primary" id="createnewquiz">Create New Quiz</button>
     </div>
 </body>
+
 <script src="jquery-3.4.0.js"></script>
 <script src="bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
 <script src="localforage.min.js"></script>
