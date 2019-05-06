@@ -59,7 +59,6 @@ function createDB() { //this function is called when ever a new quiz is made
         request.onerror = function (event) {
             console.log("Error: " + event.target.errorCode);
         }
-    
 
 }
 
