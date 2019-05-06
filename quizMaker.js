@@ -13,7 +13,7 @@ $("#addTitle").submit(function () {
         $("#addTitle").replaceWith('<h3>' + title + '</h3>');
         x.style.display = "block"; //show the button 
         //replace the title form with another
-        var questionID = title.replace(/\s/g, '') + increment;
+        var questionID = title.replace(/\s/g, '') + increment; //removing strings from the title and add increment to create unique question ID
         $("div.newQuest").append("<form class='addQuestion' onsubmit='return false'> <div class='question'> <div> <p> Question " + increment + "</p><label for='test'> Marks<input type='number' id='test'></label></div> <div class='col-md-12'><input type='text' name='questionBox' placeholder='Begin Typing Question here' class='form-control input-lg'></div> <div class='col-md-8'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect' value='A' checked> </div> </div> <input type='text' id='" + questionID + "A' name='answer' placeholder='Option A' class='form-control A'> </div> </div> <div class='col-md-8'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect' value='B'> </div> </div> <input type='text' id='" + questionID + "B' name='answer' placeholder='Option B' class='form-control B'> </div> </div> <div class='col-md-8'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect' value='C'> </div> </div> <input type='text' id='" + questionID + "C' name='answer' placeholder='Option C' class='form-control C'> </div> </div> <div class='col-md-8'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect' value='D'> </div> </div> <input type='text' id='" + questionID + "D' name='answer' placeholder='Option D' class='form-control D'> </div> </div> <div class='col-md-12'> <button type='submit' class='saveQuestionBtn btn btn-primary'>Save Question</button> <button type='reset' class='btn btn-secondary'> Reset Question</button> </div> </div> </form>");
         console.log(questionID);
         createDB();
@@ -25,7 +25,7 @@ $("#addTitle").submit(function () {
 
 let db = null;
 
-function createDB() { //this function is called when ever a new quiz is made
+function createDB() { //this function is called when ever a new quiz is made to check if database exist or needs to be updated
 
 //    var dbExists = true;
 //    var request2 = window.indexeddb.open("QuizMaker");
@@ -38,7 +38,7 @@ function createDB() { //this function is called when ever a new quiz is made
 //        
 //    }
         const dbname = "QuizMaker";
-        const dbVersion = 1;
+        const dbVersion = 1; // something needs to be done about this, because whenever a new object store is created, the dbVersion increases
         const request = indexedDB.open(dbname, dbVersion);
 
         request.onupgradeneeded = function (event) { //this needs to be called whenever the tutor creates a new quiz
