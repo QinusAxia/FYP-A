@@ -17,7 +17,6 @@ html, body{
 	border-width: 5px !important;
 }
 
-  
 /* .bg-yellow{ */
     /* background-color:lightgoldenrodyellow;  */
     /* background: repeating-linear-gradient(
@@ -40,13 +39,6 @@ html, body{
     height: 200%;
     width: 100%;
     background-color:lightgoldenrodyellow; 
-    /* background: repeating-linear-gradient(
-    0deg,
-    rgb(158, 158, 104),
-    rgb(158, 158, 104) 5px,
-    lightgoldenrodyellow  5px,
-    lightgoldenrodyellow 75px
-    ); */
 
     -webkit-touch-callout: none;
     -webkit-user-select: none;
