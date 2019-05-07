@@ -1,10 +1,150 @@
 <!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Nexus Website Menu</title>
+    <meta name="description" content="A sidebar menu as seen on the Google Nexus 7 website" />
+    <meta name="keywords" content="google nexus 7 menu, css transitions, sidebar, side menu, slide out menu" />
+    <meta name="author" content="Codrops" />
+<!--    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />-->
+
+    <link rel="shortcut icon" href="../favicon.ico">
+
+   
+<!--
+    <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="custom.css">
+-->
+    <script src="js/modernizr.custom.js"></script>
+    <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="custom.css">
+    
+     <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="css/demo.css" />
+    <link rel="stylesheet" type="text/css" href="css/component.css" />
+</head>
+<style>
+    .thumb {
+        height: 400px;
+        margin: 10px 5px 0 0;
+    }
+
+</style>
+
+<body>
+    <div class="container">
+        <ul id="gn-menu" class="gn-menu-main" style="z-index: 999">
+            <li class="gn-trigger">
+                <a class="gn-icon gn-icon-menu"><span>Menu</span></a>
+                <nav class="gn-menu-wrapper">
+                    <div class="gn-scroller">
+                        <ul class="gn-menu">
+
+                            <li><a class="gn-icon gn-icon-download" href="textbook.html">Textbook</a></li>
+                            <li><a class="gn-icon gn-icon-cog" href="notebook.html">Notebook</a></li>
+                            <li><a class="gn-icon gn-icon-help" href="quiz.html">Quiz</a></li>
+                            <li><a class="gn-icon gn-icon-help" href="quizMaker.html">Quiz Maker</a></li>
+                            <li><a class="gn-icon gn-icon-archive" href="exercise.html">Exercise</a></li>
+                            <li><a class="gn-icon gn-icon-archive" href="videobroadcast.html">VideoBroadcast</a></li>
+                            <li id="loginsec">
+                                <div style=" margin: 10px;">
+                                    <h1>Login</h1>
+                                    <label>Username</label><input style="margin-left: 2%" id="userinput" type="text"><br>
+                                    <label>Password</label><input style="margin-left: 2%" id="passinput" type="password">
+                                    <p><input type="button" id="login" value="Login"></p>
+                                </div>
+                            </li>
+                            <li style="font-weight: bold">
+                                <div style="margin-left: 15%;" id="displayuser"></div>
+                                <div style="margin-left: 15%;" id="logged"></div>
+                            </li>
+                        </ul>
+                    </div><!-- /gn-scroller -->
+                </nav>
+            </li>
+            <li style="color: black; ">Textbook</li>
+        </ul>
+
+
+        <header>
+
+        </header>
+        <br>
+        <h1>Quiz Maker</h1>
+        <p>Please give this quiz a name/title first. The name should not contain special characters like comma or
+            apostrophy</p>
+        <form id="addTitle" onsubmit="return false">
+            <div class="input-group mb-3">
+                <input id="quizTitleVal" type="text" class="form-control" placeholder="Quiz Title" aria-label="Quiz Title" value="">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" type="submit">Create Quiz</button>
+                </div>
+            </div>
+        </form>
+        <div class="newQuest"></div>
+        <br>
+        
+        <button class="btn btn-outline-primary" id="newStuff">Create new Question</button>
+        <hr>
+        <button style="display:inline;" class="btn btn-outline-primary" id="exportjsonfile">Convert</button>
+        <div style="display:inline;" id="downloadbtn"></div>
+        <hr>
+        <button class="btn btn-outline-primary" id="createnewquiz">Create New Quiz</button>
+
+    </div><!-- /container -->
+
+    <script>
+        async function loadJSON(fname) {
+            var response = await fetch(fname)
+            var str = await response.text();
+            var data = JSON.parse(str)
+            var idb = await importIDB("login", "account", data["account"]);
+        }
+
+        window.onload = loadJSON("js/account.js")
+
+    </script>
+    <script src="js/classie.js"></script>
+    <script src="js/gnmenu.js"></script>
+    <!-- Angular JS -->
+    <script src="js/angular.min.js"></script>
+    <!-- Your Controller -->
+    <script src="js/importIDB.js"></script>
+<!--    <script src="js/textbook-app2.js"></script>-->
+<!--
+    <script src="jquery-3.4.0.js"></script>
+<script src="bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
+<script src="localforage.min.js"></script>
+<script src="quizMaker.js"></script>
+-->
+   
+   <script src="jquery-3.4.0.js"></script>
+<script src="bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
+<script src="localforage.min.js"></script>
+<script src="quizMaker.js"></script>
+   
+   
+    <script>
+        new gnMenu(document.getElementById('gn-menu'));
+
+    </script>
+</body>
+
+</html>
+
+<!--
+
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Quiz Maker</title>    
+    <title>Quiz Maker</title>
     <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="custom.css">
 </head>
@@ -16,8 +156,7 @@
             apostrophy</p>
         <form id="addTitle" onsubmit="return false">
             <div class="input-group mb-3">
-                <input id="quizTitleVal" type="text" class="form-control" placeholder="Quiz Title"
-                    aria-label="Quiz Title">
+                <input id="quizTitleVal" type="text" class="form-control" placeholder="Quiz Title" aria-label="Quiz Title" value="">
                 <div class="input-group-append">
                     <button class="btn btn-outline-primary" type="submit">Create Quiz</button>
                 </div>
@@ -25,14 +164,20 @@
         </form>
         <div class="newQuest"></div>
         <button class="btn btn-outline-primary" id="newStuff">Create new Question</button>
+        <hr>
+        <button style="display:inline;" class="btn btn-outline-primary" id="exportjsonfile">Convert</button>
+        <div style="display:inline;" id="downloadbtn"></div>
+        <hr>
+        <button class="btn btn-outline-primary" id="createnewquiz">Create New Quiz</button>
     </div>
 </body>
+
 <script src="jquery-3.4.0.js"></script>
 <script src="bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
 <script src="localforage.min.js"></script>
 <script src="quizMaker.js"></script>
 
-<!-- 
+ 
 <form class='addQuestion' onsubmit='return false'>
         <div class='question'>    
             <div> <p> Question " + increment + "</p><label for='test'>  Marks<input type='number' id='test'></label></div> 
@@ -85,7 +230,7 @@
                 <button type='submit' class='saveQuestionBtn btn btn-primary'>Save Question</button> <button type='reset' class='btn btn-secondary'> Reset Question</button>
             </div>
         </div>
-    </form> -->
+    </form> 
+
 </html>
-
-
+-->

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>File Upload with PHP</title>
+</head>
+
+<body>
+    <a href=""></a>
+</body>
+
+<script src="jquery-3.4.0.js"></script>
+<script>
+    var pdfFilesDirectory = '/uploads/';
+    
+
+    // get auto-generated page 
+    $.ajax({
+        url: pdfFilesDirectory
+        
+    }).then(function(html) {
+        // create temporary DOM element
+        var document = $(html);
+
+        // find all links ending with .pdf 
+        document.find('a[href$=.pdf]').each(function() {
+            var pdfName = $(this).text();
+            var pdfUrl = $(this).attr('href');
+
+            // do what you want here
+            alert(pdfUrl);
+        })
+    });
+
+</script>
+
+</html>

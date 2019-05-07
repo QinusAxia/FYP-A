@@ -1,6 +1,9 @@
-# FYP A
-### About
-This project is under SWE40001 Software Engineering Project A under Swinburne University of Technology Swinburne Sarawak. The purpose of this project is to provide chung hua school no.4 with a tablet learning system that helps to facilitate learning in the classroom and encourage students to self-study. 
+Created by Codrops
 
-Links:
-[Trello board (only members can view)](https://trello.com/b/TVNj6Pr7/project-a)
+http://www.codrops.com
+
+Integrate or build upon it for free in your personal or commercial projects. Don't republish, redistribute or sell "as-is". 
+
+Read more here: http://tympanus.net/codrops/licensing/
+
+

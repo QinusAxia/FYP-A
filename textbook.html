@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Nexus Website Menu</title>
+    <meta name="description" content="A sidebar menu as seen on the Google Nexus 7 website" />
+    <meta name="keywords" content="google nexus 7 menu, css transitions, sidebar, side menu, slide out menu" />
+    <meta name="author" content="Codrops" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+
+    <link rel="shortcut icon" href="../favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="css/demo.css" />
+    <link rel="stylesheet" type="text/css" href="css/component.css" />
+    <script src="js/modernizr.custom.js"></script>
+</head>
+<style>
+    .thumb {
+        height: 400px;
+        margin: 10px 5px 0 0;
+    }
+
+</style>
+
+<body>
+    <div class="container">
+        <ul id="gn-menu" class="gn-menu-main" style="z-index: 999">
+            <li class="gn-trigger">
+                <a class="gn-icon gn-icon-menu"><span>Menu</span></a>
+                <nav class="gn-menu-wrapper">
+                    <div class="gn-scroller">
+                        <ul class="gn-menu">
+
+                            <li><a class="gn-icon gn-icon-download" href="textbook.html">Textbook</a></li>
+                            <li><a class="gn-icon gn-icon-cog" href="notebook.html">Notebook</a></li>
+                            <li><a class="gn-icon gn-icon-help" href="quiz.html">Quiz</a></li>
+                            <li><a class="gn-icon gn-icon-help" href="quizMaker.html">Quiz Maker</a></li>
+                            <li><a class="gn-icon gn-icon-archive" href="exercise.html">Exercise</a></li>
+                            <li><a class="gn-icon gn-icon-archive" href="videobroadcast.html">VideoBroadcast</a></li>
+                            <li id="loginsec">
+                                <div style=" margin: 10px;">
+                                    <h1>Login</h1>
+                                    <label>Username</label><input style="margin-left: 2%" id="userinput" type="text"><br>
+                                    <label>Password</label><input style="margin-left: 2%" id="passinput" type="password">
+                                    <p><input type="button" id="login" value="Login"></p>
+                                </div>
+                            </li>
+                            <li style="font-weight: bold"><div style="margin-left: 15%;" id="displayuser"></div><div style="margin-left: 15%;"id="logged"></div></li>
+                        </ul>
+                    </div><!-- /gn-scroller -->
+                </nav>
+            </li>
+            <li style="color: black; ">Textbook</li>
+        </ul>
+        
+        
+        <header>
+
+        </header>
+        <br>
+                <div class="row">
+            <div class="col-md-3">
+                <h1>Chapter</h1>
+                <hr>
+                <p>New Chapter Name:
+                    <input type="text" id="newChapterName">
+
+                    <button type="button" id="btnNewChapter">Add</button>
+                </p>
+                <div id="btn"></div>
+
+                <h1>Edit Textbook</h1>
+                <hr>
+                <input type="file" id="pictureTest" style="width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;" capture>
+                <label style=" font-weight: normal;
+    background-color: black;
+    display: inline-block; text-align: center; width: 100%; background-color: #e7e7e7; color:#34495e; padding: 8px 20px;" for="pictureTest">Upload New Page</label>
+
+                <hr>
+                <button id="delChapter" style="width:100%">Delete Chapter</button>
+                <button id="delPage" style="width:100%">Delete Page</button>
+
+
+
+
+            </div>
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 id="chapter" style="text-align: center">Select Your Chapter</h1>
+                        <hr style="width:90%">
+                        <div class="col-md-12" style="text-align: center;">
+
+                            <div id="recordToLoad"></div>
+                            <br>
+                            <img id="testImage" class="thumb">
+                            <hr style="width:90%">
+                            <button id="previousPage">Previous</button><button id="nextPage">Next</button>
+                            <h2 id="page" style="text-align: center">Page:</h2>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </div><!-- /container -->
+
+    <script>
+        async function loadJSON(fname) {
+            var response = await fetch(fname)
+            var str = await response.text();
+            var data = JSON.parse(str)
+            var idb = await importIDB("login", "account", data["account"]);
+        }
+
+        window.onload = loadJSON("js/account.js")
+
+    </script>
+    <script src="js/classie.js"></script>
+    <script src="js/gnmenu.js"></script>
+    <!-- Angular JS -->
+    <script src="js/angular.min.js"></script>
+    <!-- Your Controller -->
+    <script src="js/importIDB.js"></script>
+    <script src="js/textbook-app2.js"></script>
+    <script>
+        new gnMenu(document.getElementById('gn-menu'));
+
+    </script>
+</body>
+
+</html>
