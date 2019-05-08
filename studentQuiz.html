@@ -5,24 +5,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Quiz</title>
+    <title>Quiz Students View</title>
     <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="custom.css">
+
+    <link rel="shortcut icon" href="../favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="css/demo.css" />
+    <link rel="stylesheet" type="text/css" href="css/component.css" />
+    <script src="js/modernizr.custom.js"></script>
+    <meta name="author" content="Codrops" />
+
+    <link rel="shortcut icon" href="../favicon.ico">
+    <script src="js/modernizr.custom.js"></script>
+
+    <style>
+        label {
+            margin: 0;
+            padding: 0;
+        }
+        .thumb {
+            height: 400px;
+            margin: 10px 5px 0 0;
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Quiz Title</h1>
-        <p></p>
+
+        <ul id="gn-menu" class="gn-menu-main" style="z-index: 999">
+            <li class="gn-trigger">
+                <a class="gn-icon gn-icon-menu"><span>Menu</span></a>
+                <nav class="gn-menu-wrapper">
+                    <div class="gn-scroller">
+                        <ul class="gn-menu">
+
+                            <li><a class="gn-icon gn-icon-download" href="textbook.html">Textbook</a></li>
+                            <li><a class="gn-icon gn-icon-cog" href="notebook.html">Notebook</a></li>
+                            <li><a class="gn-icon gn-icon-help" href="quiz.html">Quiz</a></li>
+                            <li><a class="gn-icon gn-icon-help" href="quizMaker.html">Quiz Maker</a></li>
+                            <li><a class="gn-icon gn-icon-archive" href="exercise.html">Exercise</a></li>
+                            <li><a class="gn-icon gn-icon-archive" href="videobroadcast.html">VideoBroadcast</a></li>
+                            <li id="loginsec">
+                                <div style=" margin: 10px;">
+                                    <h1>Login</h1>
+                                    <label>Username</label><input style="margin-left: 2%" id="userinput"
+                                        type="text"><br>
+                                    <label>Password</label><input style="margin-left: 2%" id="passinput"
+                                        type="password">
+                                    <p><input type="button" id="login" value="Login"></p>
+                                </div>
+                            </li>
+                            <li style="font-weight: bold">
+                                <div style="margin-left: 15%;" id="displayuser"></div>
+                                <div style="margin-left: 15%;" id="logged"></div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </li>
+            <li style="color: black; ">Quiz</li>
+        </ul>
+
+        <header></header>
+
+        <div id="demo"></div>
+        <h1>Select Quiz to do</h1>
         <div id="questionReplace">
-            <!-- JS will dynamically append content here -->
+
+            <form id="openQuiz" onsubmit="return false">
+                <label for="sel1">Quizes available:</label>
+                <select class="form-control form-control-lg" id="sel1">
+
+                </select>
+                <button class="btn btn-primary" id="openQuizbtn">Open Quiz</button>
+            </form>
+
+            <form onsubmit="return false" id="submitQuiz">                                           
+                <div id="appendhere">
+                    <!-- Questions will be appended here -->
+                </div>
+                <button class="btn btn-primary" type="submit" id="submithide">Submit Quiz</button>
+            </form>
+
         </div>
+    </div>
     </div>
 
 </body>
 <script src="jquery-3.4.0.js"></script>
-<script src="bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
 <script src="localforage.min.js"></script>
 <script src="studentQuiz.js"></script>
+
+<script src="js/classie.js"></script>
+<script src="js/gnmenu.js"></script>
+<script src="js/angular.min.js"></script>
+
+
+<script>
+    new gnMenu(document.getElementById('gn-menu'));
+</script>
 
 </html>

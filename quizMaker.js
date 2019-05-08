@@ -9,52 +9,50 @@ x.style.display = "none";
 
 $("#addTitle").submit(function () {
     title = document.querySelector('#quizTitleVal').value;
-    if (title != "" || title == null) {
+    if (title != "" || title != null) {
         $("#addTitle").replaceWith('<h3>' + title + '</h3>');
         x.style.display = "block"; //show the button 
         //replace the title form with another
         var questionID = title.replace(/\s/g, '') + increment; //removing strings from the title and add increment to create unique question ID
         $("div.newQuest").append("<form class='addQuestion' onsubmit='return false'> <div class='question'> <div> <p> Question " + increment + "</p><label for='test'> Marks<input type='number' id='test'></label></div> <div class='col-md-12'><input type='text' name='questionBox' placeholder='Begin Typing Question here' class='form-control input-lg'></div> <div class='col-md-8'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect' value='A' checked> </div> </div> <input type='text' id='" + questionID + "A' name='answer' placeholder='Option A' class='form-control A'> </div> </div> <div class='col-md-8'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect' value='B'> </div> </div> <input type='text' id='" + questionID + "B' name='answer' placeholder='Option B' class='form-control B'> </div> </div> <div class='col-md-8'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect' value='C'> </div> </div> <input type='text' id='" + questionID + "C' name='answer' placeholder='Option C' class='form-control C'> </div> </div> <div class='col-md-8'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect' value='D'> </div> </div> <input type='text' id='" + questionID + "D' name='answer' placeholder='Option D' class='form-control D'> </div> </div> <div class='col-md-12'> <button type='submit' class='saveQuestionBtn btn btn-primary'>Save Question</button> <button type='reset' class='btn btn-secondary'> Reset Question</button> </div> </div> </form>");
         console.log(questionID);
+        console.log(title);
         createDB();
     } else {
         alert("Title cannot be empty");
     }
-
 });
 
 let db = null;
 
 function createDB() { //this function is called when ever a new quiz is made to check if database exist or needs to be updated
 
-//    var dbExists = true;
-//    var request2 = window.indexeddb.open("QuizMaker");
-//    request2.onupgradeneeded = function (e) {
-//        e.target.transaction.abort();
-//        dbExists = false;
-//    }
-//    if(dbExists == true){
-//        deleteDatabase();
-//        
-//    }
         const dbname = "QuizMaker";
-        const dbVersion = 1; // something needs to be done about this, because whenever a new object store is created, the dbVersion increases
-        const request = indexedDB.open(dbname, dbVersion);
+        //check if the db already made before, if not store dbversion
+        if(localStorage.getItem("dbversion")===null) {
+            localStorage.setItem("dbversion", 1);
+        } else {
+            localStorage.setItem('dbversion',parseInt(localStorage.getItem('dbversion'))+1);//very important to update the dbversion before opening to create a new object store
+        } 
 
-        request.onupgradeneeded = function (event) { //this needs to be called whenever the tutor creates a new quiz
-            db = event.target.result;
-            var quizTitle = title;
-            db.createObjectStore(quizTitle, {
-                keypath: "questionid"
-            })
-            console.log("Object Store " + quizTitle + " has been made");
-        }
+        var dbVersion = parseInt(localStorage.getItem("dbversion")); // localstorage can only store string values.
+        var request = indexedDB.open(dbname, dbVersion);
 
         //on success
         request.onsuccess = function (event) {
             db = event.target.result
             console.log("Database " + dbname + " version " + dbVersion + " has been succesfully made");
         }
+
+        request.onupgradeneeded = function (event) { //this needs to be called whenever the tutor creates a new quiz
+            db = event.target.result;
+            var quizTitle = title;
+            db.createObjectStore(quizTitle, {
+                keypath: "questionid"
+            })            
+            console.log("Object Store " + quizTitle + " has been made");
+        }
+
         //on error
         request.onerror = function (event) {
             console.log("Error: " + event.target.errorCode);
@@ -62,7 +60,7 @@ function createDB() { //this function is called when ever a new quiz is made to 
 
 }
 
-//function to add new question
+//function to add new question interface
 $("#newStuff").click(function () {
     increment += 1;
     var questionID = title.replace(/\s/g, '') + increment;
@@ -81,8 +79,6 @@ $(document).on("click", "button.saveQuestionBtn", function () {
     var ans = $(this).parent().parent().find("input[name=radioCorrect]:checked").parent().parent().parent().find("input[type=text]").val();
     var mark = $(this).parent().parent().find("input[type=number]").val();
 
-    console.log(quesID, ques, a, b, c, d, ans, mark); //testing if getting correct values
-
     var fullquestion = {
         questionid: quesID,
         question: ques,
@@ -93,7 +89,10 @@ $(document).on("click", "button.saveQuestionBtn", function () {
         correctAns: ans,
         marks: mark
     }
-    const tx = db.transaction(title, "readwrite");
+
+    console.log(fullquestion); //test to see if data is written correctly
+
+    var tx = db.transaction(title, "readwrite");
     tx.onerror = function (e) {
         alert(` Error! ${e.target.error}  `);
     }
@@ -126,8 +125,8 @@ function getAllItems(callback) {
             if (cursor) {
                 items.push(cursor.value);
                 cursor.continue();
-
             }
+            console.log(items)
         };
     }
 }
@@ -157,40 +156,33 @@ function exportToJsonFile(jsonData) {
     console.log(dataStr2);
 }
 
-function deleteDatabase() {
-
-    var DBDeleteRequest = window.indexedDB.deleteDatabase("QuizMaker");
-
-    DBDeleteRequest.onerror = function (event) {
-        console.log("Error deleting database.");
-    };
-
-    DBDeleteRequest.onsuccess = function (event) {
-        console.log("Database deleted successfully");
-
-        console.log(event.result); // should be undefined
-    };
-}
-
-
+//This button is supposed to convert the data into json for export
 var convertfile = document.getElementById('exportjsonfile');
-
 convertfile.onclick = function () {
-
     getAllItems(function (items) {
         var len = items.length;
         for (var i = 0; i < len; i += 1) {
             console.log(items[i]);
         }
-
         exportToJsonFile(items);
     })
-
 }
 
-var createNewQuiz = document.getElementById('createnewquiz');
+//marked for removal because we do not intend to delete the database in real production
+// function deleteDatabase() {
+//     var DBDeleteRequest = window.indexedDB.deleteDatabase("QuizMaker");
+//     DBDeleteRequest.onerror = function (event) {
+//         console.log("Error deleting database.");
+//     };
+//     DBDeleteRequest.onsuccess = function (event) {
+//         console.log("Database deleted successfully");
+//         console.log(event.result); // should be undefined
+//     };
+// }
 
-createNewQuiz.onclick = function () {
-    document.location.reload();
-    deleteDatabase();
-}
+//Marked for removal because creating a new quiz should not require deletion of database
+// var createNewQuiz = document.getElementById('createnewquiz');
+// createNewQuiz.onclick = function () {
+//     document.location.reload();
+//     deleteDatabase();
+// }
