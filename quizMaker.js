@@ -15,10 +15,17 @@ window.onload = function () { //this function will load the table with the list 
         console.log("db closed in before opening new request");
     }
 
-    var request = indexedDB.open('QuizMaker');        
-    request.onsuccess = function (e) {        
-        db = e.target.result; console.log("db open for first request to load the table");
-        dbversion = db.version; console.log(dbversion);
+    if (localStorage.getItem("dbversion") === null) {
+        localStorage.setItem("dbversion", 1);
+    } // localStorage.setItem('dbversion',parseInt(localStorage.getItem('dbversion'))+1);
+
+    // dbversion = parseInt(localStorage.getItem('dbversion'));
+    var request = indexedDB.open('QuizMaker');
+    request.onsuccess = function (e) {
+        db = e.target.result;
+        console.log("db open for first request to load the table");
+        dbversion = db.version;
+        console.log(dbversion);
         dbOpen = true;
         var allStoreNames = new Array();
         var objectStoreNames = db.objectStoreNames;
@@ -31,9 +38,9 @@ window.onload = function () { //this function will load the table with the list 
         }
     }
     request.onupgradeneeded = function (event) {
-        if (dbversion!=1) {
-            console.log("WARNING: On upgradeneeded load table NOT have been called ");    
-        }        
+        if (dbversion != 1) {
+            console.log("WARNING: On upgradeneeded load table NOT have been called");
+        }
     }
     //on error
     request.onerror = function (event) {
@@ -51,45 +58,27 @@ $(document).on("click", "button.deletquiz", function () {
         console.log("db closed in before opening new request to delete obstore");
     }
 
-    var request = indexedDB.open('QuizMaker');
-    console.log(dbversion);
-
-    request.onsuccess = function (e) {
-        console.log("db open to get dbversion");
+    dbversion +=1; console.log(dbversion);    
+    var request = indexedDB.open('QuizMaker', dbversion);
+    
+    request.onsuccess = function (event) {        
         dbOpen = true;
-        db = e.target.result;
-        var version = parseInt(db.version);
-        db.close();
-        dbOpen = false;
-        console.log("dbclose on firstrequest");
-        var secondRequest = indexedDB.open('QuizMaker', version + 1);
-        dbversion = version + 1;
-        console.log("db open for secondrequest. Call upgrade")
-        console.log(dbversion);
-        secondRequest.onsuccess = function (e) {
-            dbversion = parseInt(database.version);
-            console.log(dbversion);
-        }
-        secondRequest.onupgradeneeded() = function (e) {
-            db = e.target.result;
-            db.deleteObjectStore(test);
-            $(this).parents("tr").remove();
-        }
-
-        secondRequest.onerror = function (e) {
-            console.log("Error: " + e.target.errorCode);
-        }
-
+        db = event.target.result;        
+        console.log("Database upgrade success version: " + dbversion)
     }
 
-    request.onupgradeneeded = function (event) {
-        console.log("Onupgrade needed should NOT BE called here");
+    request.onupgradeneeded = function (event) {        
+        db = event.target.result;
+        db.deleteObjectStore(test);
+        console.log("Object store deleted");        
     }
 
     //on error
     request.onerror = function (event) {
         console.log("Error: " + event.target.errorCode);
     }
+
+    $(this).parents("tr").remove();
 
 });
 
@@ -99,13 +88,15 @@ $("#addTitle").submit(function () {
         alert("Title cannot be empty");
     } else {
 
+        $("#quizTable tbody").append('<tr><td class="objname">' + title + '<td><button class="btn btn-warning deletquiz">Delete</button> <button class="btn btn-secondary editbtn">Edit</button></td>/td></tr>');
+
         if (dbOpen) {
             db.close();
             dbOpen = false;
             console.log("db closed in before adding a new quiz");
         }
 
-        var request = indexedDB.open('QuizMaker');        
+        var request = indexedDB.open('QuizMaker');
         request.onerror = function (event) {
             console.log("Error: " + event.target.errorCode);;
         }
@@ -114,7 +105,7 @@ $("#addTitle").submit(function () {
             console.log("db open for first request to get the version"); //this is to get the version 
             db = e.target.result;
             dbOpen = true;
-            dbVersion = parseInt(db.version);
+            dbversion = parseInt(db.version);
             console.log(dbversion);
             var notExist = true;
             var allStoreNames = new Array(); //to compare with title        
@@ -140,22 +131,22 @@ $("#addTitle").submit(function () {
                 }
                 dbversion += 1;
                 console.log(dbversion);
-                var secondRequest = indexedDB.open('QuizMaker', dbVersion); //opening higher version
+                var secondRequest = indexedDB.open('QuizMaker', dbversion); //opening higher version
                 console.log("db open for secondrequest to add a new quiz: Upgrade needed");
                 secondRequest.onupgradeneeded = function (e) {
                     db = e.target.result;
                     // db = secondRequest.result;
-                    console.log("On Upgrade has been called to add new quiz");                    
+                    console.log("On Upgrade has been called to add new quiz");
                     var quizTitle = title;
                     db.createObjectStore(quizTitle, {
                         keypath: "questionid"
-                    });                    
-                    console.log("Object Store " + quizTitle + " has been made");                       
+                    });
+                    console.log("Object Store " + quizTitle + " has been made");
                 };
 
                 secondRequest.onsuccess = function (e) {
                     dbOpen = true;
-                    console.log("Quiz succesfully added");                    
+                    console.log("Quiz succesfully added");
                     //then make changes to html
                     $("#addTitle").replaceWith('<h3>' + title + '</h3>');
                     x.style.display = "block"; //show the button 
@@ -164,14 +155,14 @@ $("#addTitle").submit(function () {
                     $("div.newQuest").append("<form class='addQuestion' onsubmit='return false'> <div class='question'> <div> <p> Question " + increment + "</p><label for='test'> Marks<input type='number' id='test'></label></div> <div class='col-md-12'><input type='text' name='questionBox' placeholder='Begin Typing Question here' class='form-control input-lg'></div> <div class='col-md-8'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect' value='A' checked> </div> </div> <input type='text' id='" + questionID + "A' name='answer' placeholder='Option A' class='form-control A'> </div> </div> <div class='col-md-8'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect' value='B'> </div> </div> <input type='text' id='" + questionID + "B' name='answer' placeholder='Option B' class='form-control B'> </div> </div> <div class='col-md-8'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect' value='C'> </div> </div> <input type='text' id='" + questionID + "C' name='answer' placeholder='Option C' class='form-control C'> </div> </div> <div class='col-md-8'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect' value='D'> </div> </div> <input type='text' id='" + questionID + "D' name='answer' placeholder='Option D' class='form-control D'> </div> </div> <div class='col-md-12'> <button type='submit' class='saveQuestionBtn btn btn-primary'>Save Question</button> <button type='reset' class='btn btn-secondary'> Reset Question</button> </div> </div> </form>");
                     console.log(questionID);
                     console.log(title);
-                }
+                };
 
                 secondRequest.onerror = function (e) {
                     console.log("Error: " + e.target.errorCode);
-                }
+                };
             } else {
                 alert("This quiz has a similar name to an existing quiz");
-            }            
+            }
         }
     }
 
@@ -210,16 +201,16 @@ $(document).on("click", "button.saveQuestionBtn", function () {
     console.log(fullquestion); //test to see if data is written correctly
 
     if (dbOpen) {
-        db.close() 
+        db.close()
         console.log("closing database connection to reopen");
     }
 
-    var request = indexedDB.open('QuizMaker',dbversion);
-    request.onupgradeneeded = function(e) {
+    var request = indexedDB.open('QuizMaker', dbversion);
+    request.onupgradeneeded = function (e) {
         console.log("Upgrade needed should NOT have been called");
-    }    
-    request.onsuccess = function(e) {
-        db = e.target.result;        
+    }
+    request.onsuccess = function (e) {
+        db = e.target.result;
         console.log(title + " in " + db.version);
         var tx = db.transaction(title, "readwrite");
         tx.onerror = function (e) {
@@ -229,7 +220,7 @@ $(document).on("click", "button.saveQuestionBtn", function () {
         quizQuestion.put(fullquestion, quesID);
     }
 
-    request.onerror = function(e) {
+    request.onerror = function (e) {
         console.log("Error: " + e.target.errorCode);
     }
 
