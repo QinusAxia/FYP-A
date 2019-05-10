@@ -21,8 +21,7 @@ request.onsuccess = function (event) {
     var objectStoreNames = db.objectStoreNames;
     for (var i = 0; i < objectStoreNames.length; i++) {
         allStoreNames[i] = objectStoreNames[i];
-    }
-    // allStoreNames.pop();
+    }    
     console.log(allStoreNames);
     filldropdown();
 };
@@ -46,20 +45,29 @@ $("#openQuiz").submit(function () {
 });
 
 $(document).on("click", "button#submithide", function () {     
-    // var test = $(this).parent().children("div#appendhere").find("input[name=radioAns1]:checked").attr('value');
+    // var test = $(this).parent().children("di v#appendhere").find("input[name=radioAns1]:checked").attr('value');
     // console.log(test);
     //loop as many time as the question number    
     var studans = new Array();    
     for (let index = 1; index <= countQues; index++) {
-        var radioName = "input[name=radioAns"+ index + "]:checked";
-        
+        var radioName = "input[name=radioAns"+ index + "]:checked";                
+        var studentans = $(this).parent().find(radioName).val();
+        console.log(studentans);
 
-
-
-        studans.push($(this).parent().find(radioName).val());        
+        if (studentans==rightans[(index-1)]) {
+            //if answer is correct make it green
+            console.log("Question: " + index + " is correct");
+            $(this).parent().find(radioName).parent().parent().css("background-color", "green");
+        } else {
+            console.log("Question: " + index + " is wrong. The correct answer is: "+ rightans[index-1]);
+            //else make it red
+            $(this).parent().find(radioName).parent().parent().css("background-color", "red");
+        }
+        // studans.push($(this).parent().find(radioName).val());
     }
-    console.log(studans);
-    checkanswer(studans);
+    $("#submitQuiz :input").prop("disabled", true); //disable input after marking
+    // console.log(studans);
+    // checkanswer(studans);
 });
 
 function checkanswer(studans) {
@@ -93,7 +101,7 @@ function loadAllQues(quizTitle) {
         var cursor = event.target.result;
         if (cursor) {
             countQues += 1; // increment count
-            $("#appendhere").append('<div class="question"> <p>Question ' + cursor.value.questionid + '</p> <p>' + cursor.value.question + '</p> <div class="input-group"> <label for="'+ cursor.key +'A"> <div class="input-group-prepend"> <div class="input-group-text"> <input type="radio" id="'+cursor.key+'A" value="' + cursor.value.A + '" name="radioAns' + cursor.key + '" checked> </div> <span class="input-group-text">A) ' + cursor.value.A + '</span> </div> </label> </div> <div class="input-group"> <label for="'+cursor.key+'B"> <div class="input-group-prepend"> <div class="input-group-text"> <input type="radio" id="'+cursor.key+'B" value="' + cursor.value.B + '" name="radioAns' + cursor.key + '"> </div> <span class="input-group-text">B) ' + cursor.value.B + '</span> </div> </label> </div> <div class="input-group"> <label for="'+cursor.key+'C"> <div class="input-group-prepend"> <div class="input-group-text"> <input type="radio" id="'+cursor.key+'C" value="' + cursor.value.C + '" name="radioAns' + cursor.key + '"> </div> <span class="input-group-text">C) ' + cursor.value.C + '</span> </div> </label> </div> <div class="input-group"> <label for="'+cursor.key+'D"> <div class="input-group-prepend"> <div class="input-group-text"> <input type="radio" id="'+cursor.key+'D" value="' + cursor.value.D + '" name="radioAns' + cursor.key + '"> </div> <span class="input-group-text">D) ' + cursor.value.D + '</span> </div> </label> </div></div>');
+            $("#appendhere").append('<div class="question"> <p>Question ' + cursor.value.questionid + '</p> <p>' + cursor.value.question + '</p> <div class="input-group"> <label for="'+ cursor.key +'A"> <div class="input-group-prepend"> <div class="input-group-text"> <input type="radio" id="'+cursor.key+'A" value="' + cursor.value.A + '" name="radioAns' + cursor.key + '" checked> </div> <span class="form-control input-group-text">A) ' + cursor.value.A + '</span> </div> </label> </div> <div class="input-group"> <label for="'+cursor.key+'B"> <div class="input-group-prepend"> <div class="input-group-text"> <input type="radio" id="'+cursor.key+'B" value="' + cursor.value.B + '" name="radioAns' + cursor.key + '"> </div> <span class="input-group-text">B) ' + cursor.value.B + '</span> </div> </label> </div> <div class="input-group"> <label for="'+cursor.key+'C"> <div class="input-group-prepend"> <div class="input-group-text"> <input type="radio" id="'+cursor.key+'C" value="' + cursor.value.C + '" name="radioAns' + cursor.key + '"> </div> <span class="input-group-text">C) ' + cursor.value.C + '</span> </div> </label> </div> <div class="input-group"> <label for="'+cursor.key+'D"> <div class="input-group-prepend"> <div class="input-group-text"> <input type="radio" id="'+cursor.key+'D" value="' + cursor.value.D + '" name="radioAns' + cursor.key + '"> </div> <span class="input-group-text">D) ' + cursor.value.D + '</span> </div> </label> </div></div>');
             rightans.push(cursor.value.correctAns);
             cursor.continue();
         } else {
