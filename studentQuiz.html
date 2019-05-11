@@ -5,24 +5,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Quiz</title>
+    <title>Quiz Students View</title>
     <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="custom.css">
+
+    <!-- <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" type="text/css" href="css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="css/demo.css" />
+    <link rel="stylesheet" type="text/css" href="css/component.css" />
+    <script src="js/modernizr.custom.js"></script>
+    <meta name="author" content="Codrops" /> -->    
+
+    <style>
+        label {
+            margin: 0;
+            padding: 0;
+            display: block;
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Quiz Title</h1>
-        <p></p>
+    
+        <h1>Select Quiz to do</h1>
         <div id="questionReplace">
-            <!-- JS will dynamically append content here -->
+
+            <form id="openQuiz" onsubmit="return false">
+                <label for="sel1">Quizes available:</label>
+                <select class="form-control form-control-lg" id="sel1">
+
+                </select>
+                <button class="btn btn-primary" id="openQuizbtn">Open Quiz</button>
+            </form>
+
+            <form onsubmit="return false" id="submitQuiz">                                           
+                <div id="appendhere">
+                    <!-- Questions will be appended here -->
+                </div>
+                <button class="btn btn-primary" type="submit" id="submithide">Submit Quiz</button>
+            </form>
+
+            <div id="displayResult"></div>
+
         </div>
+    </div>
     </div>
 
 </body>
 <script src="jquery-3.4.0.js"></script>
-<script src="bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
 <script src="localforage.min.js"></script>
 <script src="studentQuiz.js"></script>
+
+
+<script>
+    new gnMenu(document.getElementById('gn-menu'));
+</script>
 
 </html>
