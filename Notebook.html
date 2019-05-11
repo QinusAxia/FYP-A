@@ -10,106 +10,109 @@
 </head>
 <body>
 <div class="container-fluid fill-height">
-  <h1>NOTEBOOK MODULE</h1>
 
-  <!-- NAVBAR FOR NOTEBOOK -->
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<!-- <h1>NOTEBOOK MODULE</h1> -->
+<div class="row">
+<h3 class="border border-dark rounded-lg offset-4">TITLE: TITLEPUTHERE</h3>
+</div>
+<button type="button" id="createNotbook" class="btn btn-primary col-xs-1" data-toggle="modal" data-target="#ModalCreate">Create Notebook</button>
+<button type="button" id="loadNotebook" class="btn btn-info col-xs-1" data-toggle="modal" data-target="#ModalChoose">Open Notebook</button>
   
-    <div class="collapse navbar-collapse justify-content-between" id="navbarsExample08">
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="navbar-brand" href="#">Tools<span class="sr-only">(current)</span></a>
-        </li>
+<!-- NAVBAR FOR NOTEBOOK -->
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-        <li class="nav-item">
-            <button type="button" id="pen" class="btn btn-outline-light" onclick="PenType(this)">Pen</button>
-        </li>
-
-        <li class="nav-item">
-            <button type="button" id="highlight" class="btn btn-outline-light" onclick="PenType(this)">Highlight</button>
-        </li>
-
-        <li class="nav-item">
-            <button type="button" id="eraser" class="btn btn-outline-light" onclick="PenType(this)">Eraser</button>
-        </li>
-          
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="dropdownColor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Color</a>
-          <div class="dropdown-menu bg-light" aria-labelledby="dropdownColor">
-              <div class="circle" id="black" style="background-color: black;" onclick="PenColor(this)"></div>
-              <div class="circle" id="blue" style="background-color: blue;" onclick="PenColor(this)"></div>
-              <div class="circle" id="green" style="background-color: green;" onclick="PenColor(this)"></div>
-              <div class="circle" id="yellow" style="background-color: yellow;" onclick="PenColor(this)"></div>
-              <div class="circle" id="orange" style="background-color: orange;" onclick="PenColor(this)"></div>
-              <div class="circle" id="red" style="background-color: red;" onclick="PenColor(this)"></div>
-          </div>
-        </li>
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="dropdownPaper" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Paper Type</a>
-          <div class="dropdown-menu bg-dark" aria-labelledby="dropdownColor">
-            <button type="button" class="btn btn-outline-warning" onclick="ChangeBackground()">Lines Paper</button>                  
-            <button type="button" class="btn btn-outline-warning" onclick="ChangeBackground2()">Blank Paper</button>
-          </div>
-        </li>
-      </ul>
-      
-      <!-- Save & Load button -->
-      <div class="navbar-nav">
-        <a href="#" id="save" class="nav-item btn btn-outline-success">Save Page</a>
-        <button type="button" class="nav-item btn btn-outline-success" data-toggle="modal" data-target="#myModal">Open File</button>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Canvas Here -->
-  <div id="parentCanvas">
-    <canvas id="myCanvas"></canvas>
-  </div>
-
-  <!-- Pagination -->
-  <nav aria-label="Page navigation example">
-    <ul class="pagination justify-content-center">
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-          <span class="sr-only">Previous</span>
-        </a>
+  <div class="collapse navbar-collapse justify-content-between" id="navbarsExample08">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="navbar-brand" href="#">Tools<span class="sr-only">(current)</span></a>
       </li>
-      <li class="page-item"><a class="page-link text-secondary" href="#">1</a></li>
-      <li class="page-item"><a class="page-link text-secondary" href="#">2</a></li>
-      <li class="page-item"><a class="page-link text-secondary" href="#">3</a></li>
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-          <span class="sr-only">Next</span>
-        </a>
+
+      <li class="nav-item">
+          <button type="button" id="pen" class="btn btn-outline-light" onclick="PenType(this)">Pen</button>
+      </li>
+
+      <li class="nav-item">
+          <button type="button" id="highlight" class="btn btn-outline-light" onclick="PenType(this)">Highlight</button>
+      </li>
+
+      <li class="nav-item">
+          <button type="button" id="eraser" class="btn btn-outline-light" onclick="PenType(this)">Eraser</button>
+      </li>
+        
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="dropdownColor" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Color</a>
+        <div class="dropdown-menu bg-light" aria-labelledby="dropdownColor">
+            <div class="circle" id="black" style="background-color: black;" onclick="PenColor(this)"></div>
+            <div class="circle" id="blue" style="background-color: blue;" onclick="PenColor(this)"></div>
+            <div class="circle" id="green" style="background-color: green;" onclick="PenColor(this)"></div>
+            <div class="circle" id="yellow" style="background-color: yellow;" onclick="PenColor(this)"></div>
+            <div class="circle" id="orange" style="background-color: orange;" onclick="PenColor(this)"></div>
+            <div class="circle" id="red" style="background-color: red;" onclick="PenColor(this)"></div>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="dropdownPaper" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Paper Type</a>
+        <div class="dropdown-menu bg-dark" aria-labelledby="dropdownColor">
+          <button type="button" class="btn btn-outline-warning" onclick="ChangeBackground()">Lines Paper</button>                  
+          <button type="button" class="btn btn-outline-warning" onclick="ChangeBackground2()">Blank Paper</button>
+        </div>
       </li>
     </ul>
-  </nav> 
+    
+    <!-- Save & Load button -->
+    <div class="navbar-nav">
+      <a href="#" id="save" class="nav-item btn btn-outline-success">Save Page</a>
+      <!-- <button type="button" class="nav-item btn btn-outline-success" data-toggle="modal" data-target="#myModal">Open File</button> -->
+    </div>
+  </div>
+</nav>
+
+<!-- Canvas Here -->
+<div id="parentCanvas">
+  <canvas id="myCanvas"></canvas>
+</div>
+
+<!-- Pagination -->
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+        <span class="sr-only">Previous</span>
+      </a>
+    </li>
+    <li class="page-item"><a class="page-link text-secondary" href="#">1</a></li>
+    <li class="page-item"><a class="page-link text-secondary" href="#">2</a></li>
+    <li class="page-item"><a class="page-link text-secondary" href="#">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+        <span class="sr-only">Next</span>
+      </a>
+    </li>
+  </ul>
+</nav> 
 
 <!-- CHOOSE IMAGE MODAL -->
 <div class="modal fade" id="myModal">
   <div class="modal-dialog">
     <div class="modal-content">
 
-      <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">Choose notebook to open: </h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
 
-      <!-- Modal body -->
       <div class="modal-body md-auto">
         <form action='#' class="btn btn-dark" onsubmit="return false;">
           <input type='file' id='imgfile'/>
         </form>
       </div>
 
-      <!-- Modal footer -->
       <div class="modal-footer">
           <button type='button' id='btnLoad' class="btn btn-success" value='Load' onclick='loadImage();'>Load</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -119,7 +122,53 @@
   </div>
 </div>
 
+<!-- CREATE NOTEBOOK MODAL-->
+<div class="modal fade" id="ModalCreate">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <div class="modal-header bg-dark text-white">
+          <h4 class="modal-title">Create new notebook: </h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+  
+        <div class="modal-body md-auto">
+          <h4><label for="newNotebookName">New Notebook Name: </label></h4>
+            <input type="text" id="newNotebookName" class="form-control form-control-lg">
+        </div>
+
+        <div class="modal-footer bg-dark">
+            <button type="button" id="btnNewNotebook" class="btn btn-outline-success" data-dismiss="modal">Create</button>
+            <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+
+<!-- CHOOSE NOTEBOOK MODAL -->
+<div class="modal fade" id="ModalChoose">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h4 class="modal-title">Choose notebook to open: </h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <div class="modal-body md-auto">
+        <div id="notebookSelection"></div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
 </div>
+</div>
+<script src="js/gnmenu.js"></script>
 <script src="jquery-3.4.0.js"></script>
 <script src="bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
 <script src="bootstrap-4.3.1-dist/js/notebook.js"></script>
