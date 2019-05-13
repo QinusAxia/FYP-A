@@ -9,8 +9,8 @@
     <meta name="description" content="A sidebar menu as seen on the Google Nexus 7 website" />
     <meta name="keywords" content="google nexus 7 menu, css transitions, sidebar, side menu, slide out menu" />
     <meta name="author" content="Codrops" />
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
 
+    <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
     <link rel="shortcut icon" href="../favicon.ico">
 
     <link rel="stylesheet" type="text/css" href="css/normalize.css" />
@@ -45,90 +45,72 @@
                     </div><!-- /gn-scroller -->
                 </nav>
             </li>
-            <li style="color: black; ">Textbook</li>
+            <li style="color: black; ">Exercise</li>
         </ul>
 
-
         <br style="margin-top: 5%;">
-        <div class="row">
-            <div class="col-md-3">
-                <h1>Chapter</h1>
-                <hr>
-                <p>New Chapter Name:
-                    <input type="text" id="newChapterName">
 
-                    <button type="button" id="btnNewChapter">Add</button>
-                </p>
-                <div id="btn"></div>
-
-                <h1>Edit Textbook</h1>
-                <hr>
-                <input type="file" id="pictureTest" style="width: 0.1px;
-	height: 0.1px;
-	opacity: 0;
-	overflow: hidden;
-	position: absolute;
-	z-index: -1;" capture>
-                <label style=" font-weight: normal;
-    background-color: black;
-    display: inline-block; text-align: center; width: 100%; background-color: #e7e7e7; color:#34495e; padding: 8px 20px;" for="pictureTest">Upload New Page</label>
-
-                <hr>
-                <button id="delChapter" style="width:100%">Delete Chapter</button>
-                <button id="delPage" style="width:100%">Delete Page</button>
-
-
-
-
-            </div>
-            <div class="col-md-9">
-                <div class="row">
-                    <div class="col-md-12">
-                        <h1 id="chapter" style="text-align: center">Select Your Chapter</h1>
-                        <hr style="width:90%">
-                        <div class="col-md-12" style="text-align: center;">
-
-                            <div id="recordToLoad"></div>
-                            <br>
-                            <img id="testImage" class="thumb">
-                            <hr style="width:90%">
-                            <button id="previousPage">Previous</button><button id="nextPage">Next</button>
-                            <h2 id="page" style="text-align: center">Page:</h2>
-                        </div>
-                    </div>
-
-
-
-
+        <h1>Homework Maker</h1>
+        <p>Please give this homework a name/title first. The name should not contain special characters like comma or
+            apostrophy</p>
+        <form id="addTitle" onsubmit="return false">
+            <div class="input-group mb-3">
+                <input id="homeworkTitleVal" type="text" class="form-control" placeholder="Homework Title" aria-label="Homework Title" value="">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" type="submit">Create Homework</button>
                 </div>
             </div>
+        </form>
+        <div class="newQuest"></div>
+        <br>
 
-        </div>
+        <button class="btn btn-outline-primary" id="newStuff">Create new Question</button>
+        <hr>
+        <button id="submit">Submit</button>
+        <hr>
+        <button class="btn btn-outline-primary" id="createnewhomework">Create New Homework</button>
+
+
 
     </div><!-- /container -->
 
-    <script>
-        async function loadJSON(fname) {
-            var response = await fetch(fname)
-            var str = await response.text();
-            var data = JSON.parse(str)
-            var idb = await importIDB("login", "account", data["account"]);
-        }
 
-        window.onload = loadJSON("js/account.js")
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/5.11.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
+
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAuODwtPcUkIngOQl2tanmvpa3fMhE1XPs",
+            authDomain: "classroom-exercise.firebaseapp.com",
+            databaseURL: "https://classroom-exercise.firebaseio.com",
+            projectId: "classroom-exercise",
+            storageBucket: "classroom-exercise.appspot.com",
+            messagingSenderId: "852062358966",
+            appId: "1:852062358966:web:b4c95becb769c14c"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
 
     </script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+
+    <script src="jquery-3.4.0.js"></script>
     <script src="js/classie.js"></script>
     <script src="js/gnmenu.js"></script>
     <!-- Angular JS -->
     <script src="js/angular.min.js"></script>
+
     <!-- Your Controller -->
-    <script src="js/importIDB.js"></script>
-    <script src="js/textbook-app2.js"></script>
+    <!--    <script src="js/importIDB.js"></script>-->
+    <script src="exercisemaker.js"></script>
     <script>
         new gnMenu(document.getElementById('gn-menu'));
 
     </script>
+
 </body>
 
 </html>
