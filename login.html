@@ -49,41 +49,49 @@
                     </div><!-- /gn-scroller -->
                 </nav>
             </li>
-            <li style="color: black; ">Login</li>
+            <li style="color: black; ">Account Setting</li>
         </ul>
         
         <br style="margin-top: 5%;">
-        <div class="row">
-            <div class="col-md-12" style="text-align: center">
-                <h1 id="chapter" style="text-align: center">Login</h1>
-                <hr style="width:40%">
-                <p><label>Username</label><input style="margin-left: 2%"  type="text"></p>
-                <p><label>Password</label><input style="margin-left: 2%"  type="password"></p>
-                <p><input type="button" value="Login"></p>
-               
+        <div class="row" style="text-align: center">
+            <div class="col-md-12">
+                <div id="login"></div>
             </div>
-
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4" >
+                <div id="accountConfiguration"></div>
+            </div>
         </div>
 
     </div><!-- /container -->
 
-    <script>
-        async function loadJSON(fname) {
-            var response = await fetch(fname)
-            var str = await response.text();
-            var data = JSON.parse(str)
-            var idb = await importIDB("login", "account", data["account"]);
-        }
+       <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/5.11.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
 
-        window.onload = loadJSON("js/account.js")
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAuODwtPcUkIngOQl2tanmvpa3fMhE1XPs",
+            authDomain: "classroom-exercise.firebaseapp.com",
+            databaseURL: "https://classroom-exercise.firebaseio.com",
+            projectId: "classroom-exercise",
+            storageBucket: "classroom-exercise.appspot.com",
+            messagingSenderId: "852062358966",
+            appId: "1:852062358966:web:b4c95becb769c14c"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
 
     </script>
+    
     <script src="js/classie.js"></script>
     <script src="js/gnmenu.js"></script>
     <!-- Angular JS -->
     <script src="js/angular.min.js"></script>
     <!-- Your Controller -->
-    <script src="js/importIDB.js"></script>
+    <script src="login.js"></script>
     <script>
         new gnMenu(document.getElementById('gn-menu'));
 
