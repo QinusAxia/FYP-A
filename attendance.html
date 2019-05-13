@@ -7,23 +7,126 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Attandence</title>
     <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
+    <style>
+        tr.selected {
+            background-color:hotpink;            
+        }
+
+        .card-body {
+            min-height: 3em;
+        }
+
+        div.card {
+            margin-bottom: 1em;
+        }
+
+    </style>
+
 </head>
 
 <body>
+    <div class="container">
+        <h1 class="border-bottom">Attendance List</h1>
+        <br />
+
+        <div class="form-group">
+            <input type="date" class="date" id="salesDate"/>
+        </div>
+
+        <div class="card">
+                <h6 class="card-header" id="addCategory">Absentees</h6>
+                <div class="card-body">
+                        
+                </div>
+
+        </div>    
 
 
-    
+        <!-- <div id="quizTable"> -->
+            <div class="container-fluid float-none">
+                <div class="table-responsive">
+                    <table id="studentTable" class="table table-bordered">
+                        <!-- <caption>Product List</caption>  -->
+                        <thead>
+                            <tr class="bg-secondary text-white">                                
+                                <th>Bil.</th>
+                                <th>Nama Murid</th>
+                                <th>姓名</th>                                
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        <!-- </div> -->
+        
+        <div class="card">
+            <h6 class="card-header" id="addCategory">Add new Student</h6>
+            <div class="card-body">
+                <form id="addStudentForm" onsubmit="return false">
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="ename_label">English Name</span>
+                            </div>
+                            <input type="text" class="form-control" id="ename">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="ename_label">Chinese Name</span>
+                            </div>
+                            <input type="text" class="form-control" id="cname">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="ename_label">Number</span>
+                            </div>
+                            <input type="number" class="form-control" id="bilangan">
+                        </div>
+                    </div>                    
+
+                    <div class="form-group">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputGroupSelect01">Gender</label>
+                            </div>
+                            <select class="custom-select" id="genderDrop">
+                                <option>Please select</option>                                
+                                <option value="L">Lelaki</option>
+                                <option value="P">Perempuan</option>                                
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                    <button type="submit" class="btn btn-outline-primary" disabled>Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
     <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>    
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
-
-    <script src="attendance.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>    
 
     <script src="jquery-3.4.0.js"></script>
+    <script src="attendance.js"></script>
     <script src="bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
     <script src="localforage.min.js"></script>
-    <script src="quizMaker.js"></script>
+
+    <!-- Material Design bootstrap -->
+    <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.0/css/mdb.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.0/js/mdb.min.js"></script> -->
+
 </body>
 
 </html>
