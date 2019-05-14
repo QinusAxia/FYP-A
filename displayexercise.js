@@ -182,20 +182,17 @@ function displaySubmission() {
                     }
                 }
                 
-//                ref.off();
             }
 
             function errData3(err) {
                 console.log(err);
             }
         }
-//        ref.off();
     }
 
     function errData4(err) {
         console.log(err);
     }
-//    ref.off();
 }
 
 function displayMySubmission(currentTitle2, user) {
@@ -209,7 +206,7 @@ function displayMySubmission(currentTitle2, user) {
         var studentquestion = data.val();
         console.log(data.val());
         var keys = Object.keys(studentquestion);
-
+        document.getElementById("homework").textContent = currentTitle2;
         console.log(keys);
         var submissionsec = document.getElementById('homeworkSection');
 
@@ -258,8 +255,6 @@ function displayMySubmission(currentTitle2, user) {
                 var stat = document.createElement('p');
                 stat.innerHTML = status;
                 submissionsec.appendChild(stat);
-
-                //                var label = document.createElement('label');
 
                 var commenttext = document.createElement('P');
                 commenttext.innerHTML = "<strong>Comment: </strong>" + commentgiven;

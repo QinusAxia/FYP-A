@@ -96,6 +96,7 @@ function loadAccount(studentskey) {
         
         var changepasswordtitle = document.createElement('h1');
         changepasswordtitle.innerHTML = 'Change Password';
+        changepasswordtitle.setAttribute('style','text-align:center');
         
         var hr = document.createElement('hr');
 
