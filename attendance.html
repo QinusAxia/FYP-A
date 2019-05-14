@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
     <style>
         tr.selected {
-            background-color:hotpink;            
+            background-color: #f8d7da;
         }
 
         .card-body {
@@ -19,7 +19,6 @@
         div.card {
             margin-bottom: 1em;
         }
-
     </style>
 
 </head>
@@ -29,37 +28,52 @@
         <h1 class="border-bottom">Attendance List</h1>
         <br />
 
-        <div class="form-group">
-            <input type="date" class="date" id="salesDate"/>
-        </div>
+        <!-- <div class="form-group">
+            <input type="date" class="date" id="attendanceDate"/>
+        </div> -->
 
-        <div class="card">
-                <h6 class="card-header" id="addCategory">Absentees</h6>
-                <div class="card-body">
-                        
+        <form onsubmit="return false" id="submitAttend">
+            <label for="attendanceDate">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="ename_label">Attendance Date</span>
+                        </div>
+                        <input type="date" class="date form-control" id="attendanceDate" />
+                    </div>
+                </div>
+            </label>
+
+            <div class="card">
+
+                <h6 class="card-header">Absentees</h6>
+                <div class="card-body" id="absenteesCard">
+
                 </div>
 
-        </div>    
-
-
-        <!-- <div id="quizTable"> -->
-            <div class="container-fluid float-none">
-                <div class="table-responsive">
-                    <table id="studentTable" class="table table-bordered">
-                        <!-- <caption>Product List</caption>  -->
-                        <thead>
-                            <tr class="bg-secondary text-white">                                
-                                <th>Bil.</th>
-                                <th>Nama Murid</th>
-                                <th>姓名</th>                                
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
+                <div class="card-footer">
+                    <button class="btn btn-primary form-control" type="submit">Submit Attendance</button>
                 </div>
             </div>
-        <!-- </div> -->
-        
+        </form>
+
+
+        <div class="container-fluid float-none">
+            <div class="table-responsive">
+                <table id="studentTable" class="table table-bordered">
+                    <!-- <caption>Product List</caption>  -->
+                    <thead>
+                        <tr class="bg-secondary text-white">
+                            <th>Bil.</th>
+                            <th>Nama Murid</th>
+                            <th>姓名</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
         <div class="card">
             <h6 class="card-header" id="addCategory">Add new Student</h6>
             <div class="card-body">
@@ -90,7 +104,7 @@
                             </div>
                             <input type="number" class="form-control" id="bilangan">
                         </div>
-                    </div>                    
+                    </div>
 
                     <div class="form-group">
                         <div class="input-group mb-3">
@@ -98,9 +112,9 @@
                                 <label class="input-group-text" for="inputGroupSelect01">Gender</label>
                             </div>
                             <select class="custom-select" id="genderDrop">
-                                <option>Please select</option>                                
+                                <option>Please select</option>
                                 <option value="L">Lelaki</option>
-                                <option value="P">Perempuan</option>                                
+                                <option value="P">Perempuan</option>
                             </select>
                         </div>
                     </div>
@@ -116,7 +130,11 @@
     <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>    
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-firestore.js"></script>
+
+    <!-- Library to format date -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"
+        integrity="sha256-CutOzxCRucUsn6C6TcEYsauvvYilEniTXldPa6/wu0k=" crossorigin="anonymous"></script>
 
     <script src="jquery-3.4.0.js"></script>
     <script src="attendance.js"></script>

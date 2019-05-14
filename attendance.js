@@ -43,6 +43,15 @@ $("#addStudentForm").submit(function() {
 
 window.onload = function () {
     loadtable();
+
+    //initialize date
+    // var now = new Date();
+    // var day = ("0" + now.getDate()).slice(-2);
+    // var month = ("0" + (now.getMonth() + 1)).slice(-2);
+    // var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+    // $('#attendanceDate').val(today);
+
+    $("#attendanceDate").val(moment().format('YYYY-MM-DD'));
 }
 
 function loadtable() {
@@ -63,7 +72,7 @@ function loadtable() {
             IDcounterForEachProduct++;
             console.log(doc.data().ename);
         });
-        console.log(content);
+        
         $('#studentTable').append(content);
     });
 
@@ -71,6 +80,23 @@ function loadtable() {
 
 $(document).on("click", "tr.tapAbsent", function () {
     var trow = $(this).find("td.ename").html();
-    console.log(trow);    
-    this.classList.toggle("selected");    
+
+    if ($(this).hasClass("selected")) {
+        var stringtogether = "span.fname:contains('"+trow+"')";        
+        $("#absenteesCard").find(stringtogether).parent().remove();
+    } else {
+        var absenteeInfo = '';
+        absenteeInfo += '<div class="alert alert-danger"><span class="fname">';
+        absenteeInfo += trow;
+        absenteeInfo += '</span></div>';
+        $('#absenteesCard').append(absenteeInfo);
+    }
+
+    this.classList.toggle("selected");
+
+})
+
+
+$("#addProductForm").submit(function() {
+    console.log("test");
 })
