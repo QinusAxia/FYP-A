@@ -97,6 +97,6 @@ $(document).on("click", "tr.tapAbsent", function () {
 })
 
 
-$("#addProductForm").submit(function() {
-    console.log("test");
+$("#submitAttend").submit(function() {
+    alert("Attendance for today saved");
 })

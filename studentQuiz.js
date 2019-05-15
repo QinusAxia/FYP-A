@@ -1,30 +1,43 @@
-let db = null;
-var dbname = "QuizMaker";
-var dbVersion = parseInt(localStorage.getItem("dbversion"));
-var request = indexedDB.open(dbname, dbVersion);
 var allStoreNames = new Array(); //this is to store all the storenames to display the available quiz
 var countQues = 0; //this is to count the number of questions loaded when the submit button is clicked
 var rightans = new Array(); //to store all the correct answer
+var dbopened = false; // to keep track if db instance is open
+let db = null;
 
-var x = document.getElementById("submithide");
+var x = document.getElementById("submithide");//this button is to submit the completed quiz
 x.style.display = "none"; //hide the submit button initially until quiz is loaded
 
+window.onload = function () {    
+    var dbname = "QuizMaker";
 
-request.onerror = function (event) {
-    console.log("Error: " + event.target.errorCode);;
+    if (dbopened) {
+        db.close(); console.log("database closed: onload function")
+    } else {
+        
+        var request = indexedDB.open(dbname);
+        request.onsuccess = function (event) {
+            db = event.target.result
+            dbopened = true;
+            console.log("Database " + dbname + " version " + db.version + " has been succesfully opened");
+            // loadAllQues();    
+            var objectStoreNames = db.objectStoreNames;
+            for (var i = 0; i < objectStoreNames.length; i++) {
+                allStoreNames[i] = objectStoreNames[i];
+            }    
+            console.log(allStoreNames);
+            filldropdown();
+        };
+
+        request.onupgradeneeded = function(e) {
+            console.log("THIS SHOULD NOT HAVE BEEN CALLED unless db is empty");
+        }
+    
+        request.onerror = function (event) {
+            console.log("Error: " + event.target.errorCode);;
+        }
+    }
+
 }
-
-request.onsuccess = function (event) {
-    db = event.target.result
-    console.log("Database " + dbname + " version " + dbVersion + " has been succesfully opened");
-    // loadAllQues();    
-    var objectStoreNames = db.objectStoreNames;
-    for (var i = 0; i < objectStoreNames.length; i++) {
-        allStoreNames[i] = objectStoreNames[i];
-    }    
-    console.log(allStoreNames);
-    filldropdown();
-};
 
 function filldropdown() {
     //populate dropdown

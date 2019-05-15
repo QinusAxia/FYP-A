@@ -15,11 +15,11 @@ window.onload = function () { //this function will load the table with the list 
         console.log("db closed in before opening new request");
     }
 
-    if (localStorage.getItem("dbversion") === null) {
-        localStorage.setItem("dbversion", 1);
-    } // localStorage.setItem('dbversion',parseInt(localStorage.getItem('dbversion'))+1);
-
+    // if (localStorage.getItem("dbversion") === null) {
+    //     localStorage.setItem("dbversion", 1);
+    // } // localStorage.setItem('dbversion',parseInt(localStorage.getItem('dbversion'))+1);
     // dbversion = parseInt(localStorage.getItem('dbversion'));
+    
     var request = indexedDB.open('QuizMaker');
     request.onsuccess = function (e) {
         db = e.target.result;
