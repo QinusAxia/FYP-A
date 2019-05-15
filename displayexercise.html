@@ -34,7 +34,6 @@
                 <nav class="gn-menu-wrapper">
                     <div class="gn-scroller">
                         <ul class="gn-menu">
-
                             <li><a class="gn-icon gn-icon-download" href="textbook.html">Textbook</a></li>
                             <li><a class="gn-icon gn-icon-cog" href="notebook.html">Notebook</a></li>
                             <li><a class="gn-icon gn-icon-help" href="quiz.html">Quiz</a></li>
@@ -49,59 +48,37 @@
                     </div><!-- /gn-scroller -->
                 </nav>
             </li>
-            <li style="color: black; ">Textbook</li>
+            <li style="color: black; ">Exercise</li>
         </ul>
 
         <header style="background-color:white">
         </header>
         <br>
+
         <div class="row">
             <div class="col-md-3">
-                <h1>Chapter</h1>
+                <h1>Homework:</h1>
                 <hr>
-                <p>New Chapter Name:
-                    <input type="text" id="newChapterName">
-
-                    <button type="button" id="btnNewChapter">Add</button>
-                </p>
-                <div id="btn"></div>
-
-                <h1>Edit Textbook</h1>
+                <!--                <button id="loadDatabase">Load</button>-->
+                <div id="homeworkTitle"></div>
+                
                 <hr>
-                <input type="file" id="pictureTest" style="width: 0.1px;
-	height: 0.1px;
-	opacity: 0;
-	overflow: hidden;
-	position: absolute;
-	z-index: -1;" capture>
-                <label style=" font-weight: normal;
-    background-color: black;
-    display: inline-block; text-align: center; width: 100%; background-color: #e7e7e7; color:#34495e; padding: 8px 20px;" for="pictureTest">Upload New Page</label>
-
-                <hr>
-                <button id="delChapter" style="width:100%">Delete Chapter</button>
-                <button id="delPage" style="width:100%">Delete Page</button>
-
-
-
-
+                
+                <h1>View Submission:</h1>
+                <div id="myLogin"></div>
+                <div id="mySubmission"></div>
             </div>
             <div class="col-md-9">
                 <div class="row">
                     <div class="col-md-12">
-                        <h1 id="chapter" style="text-align: center">Select Your Chapter</h1>
+                        <h1 id="homework" style="text-align: center">Select Your Homework</h1>
                         <hr style="width:90%">
-                        <div class="col-md-12" style="text-align: center;">
+                        <div class="col-md-12">
 
-                            <div id="recordToLoad"></div>
-                            <br>
-                            <img id="testImage" class="thumb">
-                            <hr style="width:90%">
-                            <button id="previousPage">Previous</button><button id="nextPage">Next</button>
-                            <h2 id="page" style="text-align: center">Page:</h2>
+                            <div id="homeworkSection"></div>
+                            <div id="saveBtn"></div>
                         </div>
                     </div>
-
 
 
 
@@ -110,30 +87,41 @@
 
         </div>
 
+
     </div><!-- /container -->
 
-    <script>
-        async function loadJSON(fname) {
-            var response = await fetch(fname)
-            var str = await response.text();
-            var data = JSON.parse(str)
-            var idb = await importIDB("login", "account", data["account"]);
-        }
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/5.11.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.1.0/firebase-database.js"></script>
 
-        window.onload = loadJSON("js/account.js")
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyAuODwtPcUkIngOQl2tanmvpa3fMhE1XPs",
+            authDomain: "classroom-exercise.firebaseapp.com",
+            databaseURL: "https://classroom-exercise.firebaseio.com",
+            projectId: "classroom-exercise",
+            storageBucket: "classroom-exercise.appspot.com",
+            messagingSenderId: "852062358966",
+            appId: "1:852062358966:web:b4c95becb769c14c"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
 
     </script>
+
     <script src="js/classie.js"></script>
     <script src="js/gnmenu.js"></script>
     <!-- Angular JS -->
     <script src="js/angular.min.js"></script>
     <!-- Your Controller -->
-    <script src="js/importIDB.js"></script>
-    <script src="js/textbook-app2.js"></script>
+    <script src="displayexercise.js"></script>
+    <script src="displaysubmission.js"></script>
     <script>
         new gnMenu(document.getElementById('gn-menu'));
 
     </script>
+
 </body>
 
 </html>

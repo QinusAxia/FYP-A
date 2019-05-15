@@ -11,19 +11,19 @@
 }
 
 body {
-	background: #34495e;
-    color:white;
+	background: white;
+    color:black;
     font-family: 'Lato', Arial, sans-serif;
 }
 
 input, select{
-    color:#34495e;
+    color:black;
 }
 
 button{
-background-color: #e7e7e7; /* Green */
+background-color: #e7e7e7; /* Grey */
   border: none;
-  color: #34495e;
+  color: black;
   padding: 8px 30px;
   text-align: center;
   text-decoration: none;
@@ -34,7 +34,7 @@ background-color: #e7e7e7; /* Green */
 
 .container > header,
 .codrops-top {
-	color: #fff;
+	color: white;
 	font-family: 'Lato', Arial, sans-serif;
 }
 
@@ -46,7 +46,7 @@ background-color: #e7e7e7; /* Green */
 }
 
 .container > header a {
-	color: #566473;
+	color: white;
 	text-decoration: none;
 	outline: none;
 }
@@ -71,7 +71,7 @@ background-color: #e7e7e7; /* Green */
 
 /* To Navigation Style */
 .codrops-top {
-	background: #fff;
+	background: white;
 	background: rgba(255, 255, 255, 0.6);
 	text-transform: uppercase;
 	width: 100%;
@@ -83,7 +83,7 @@ background-color: #e7e7e7; /* Green */
 	text-decoration: none;
 	padding: 0 1em;
 	letter-spacing: 0.1em;
-	color: #888;
+	color: white;
 	display: inline-block;
 }
 
