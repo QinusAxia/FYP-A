@@ -12,12 +12,11 @@
 <div class="container-fluid fill-height">
 
 <!-- <h1>NOTEBOOK MODULE</h1> -->
-<div class="row">
-<h3 class="border border-dark rounded-lg offset-4">TITLE: TITLEPUTHERE</h3>
+<div class="row container mt-3">
+  <button type="button" id="createNotbook" class="btn btn-primary mr-2" data-toggle="modal" data-target="#ModalCreate">Create Notebook</button>
+  <button type="button" id="loadNotebook" class="btn btn-info" data-toggle="modal" data-target="#ModalChoose">Open Notebook</button>
+  <h3 id="title" class="border border-dark rounded-lg mb-0 ml-2 pr-4 pl-4">TITLE: </h3>
 </div>
-<button type="button" id="createNotbook" class="btn btn-primary col-xs-1" data-toggle="modal" data-target="#ModalCreate">Create Notebook</button>
-<button type="button" id="loadNotebook" class="btn btn-info col-xs-1" data-toggle="modal" data-target="#ModalChoose">Open Notebook</button>
-  
 <!-- NAVBAR FOR NOTEBOOK -->
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
@@ -65,8 +64,11 @@
     
     <!-- Save & Load button -->
     <div class="navbar-nav">
-      <a href="#" id="save" class="nav-item btn btn-outline-success">Save Page</a>
+      <button type="button" id="save" class="nav-item btn btn-outline-success">Save Page</button>
+      <!-- <a href="#" id="save" class="nav-item btn btn-outline-success">Save Page</a> -->
       <!-- <button type="button" class="nav-item btn btn-outline-success" data-toggle="modal" data-target="#myModal">Open File</button> -->
+      <!-- <input type="file" id="save" style="visibility: hidden"> -->
+      <!-- <label class="mt-1 btn btn-outline-success inline" style="display: inline" for="save">Save Page</label> -->
     </div>
   </div>
 </nav>
@@ -77,28 +79,14 @@
 </div>
 
 <!-- Pagination -->
-<nav aria-label="Page navigation example">
-  <ul class="pagination justify-content-center">
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-        <span class="sr-only">Previous</span>
-      </a>
-    </li>
-    <li class="page-item"><a class="page-link text-secondary" href="#">1</a></li>
-    <li class="page-item"><a class="page-link text-secondary" href="#">2</a></li>
-    <li class="page-item"><a class="page-link text-secondary" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-        <span class="sr-only">Next</span>
-      </a>
-    </li>
-  </ul>
-</nav> 
+<div class="row justify-content-center">
+  <button id="previousPage" class="btn btn-info">Previous</button>
+  <h2 id="page" class="ml-3 mr-3">Page:</h2>
+  <button id="nextPage" class="btn btn-info">Next</button>
+</div>
 
 <!-- CHOOSE IMAGE MODAL -->
-<div class="modal fade" id="myModal">
+<!-- <div class="modal fade" id="myModal">
   <div class="modal-dialog">
     <div class="modal-content">
 
@@ -120,7 +108,7 @@
 
     </div>
   </div>
-</div>
+</div> -->
 
 <!-- CREATE NOTEBOOK MODAL-->
 <div class="modal fade" id="ModalCreate">
@@ -157,7 +145,7 @@
       </div>
 
       <div class="modal-body md-auto">
-        <div id="notebookSelection"></div>
+        <div id="notebookSelection" data-dismiss="modal"></div>
       </div>
 
       <div class="modal-footer">
@@ -171,6 +159,6 @@
 <script src="js/gnmenu.js"></script>
 <script src="jquery-3.4.0.js"></script>
 <script src="bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
-<script src="bootstrap-4.3.1-dist/js/notebook.js"></script>
+<script src="js/notebook.js"></script>
 </body>
 </html>
