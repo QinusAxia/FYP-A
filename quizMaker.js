@@ -49,8 +49,7 @@ window.onload = function () { //this function will load the table with the list 
 };
 
 $(document).on("click", "button.deletquiz", function () {
-    var test = $(this).parents().parent().find("td.objname").html();
-    console.log(test);
+    var test = $(this).parent().parent().find("td.objname").html();    
 
     if (dbOpen) {
         db.close();
@@ -61,16 +60,17 @@ $(document).on("click", "button.deletquiz", function () {
     dbversion +=1; console.log(dbversion);    
     var request = indexedDB.open('QuizMaker', dbversion);
     
+    request.onupgradeneeded = function (event) {        
+        db = event.target.result;
+        console.log(test);
+        db.deleteObjectStore(test);
+        console.log(test + " deleted");
+    }
+    
     request.onsuccess = function (event) {        
         dbOpen = true;
         db = event.target.result;        
         console.log("Database upgrade success version: " + dbversion)
-    }
-
-    request.onupgradeneeded = function (event) {        
-        db = event.target.result;
-        db.deleteObjectStore(test);
-        console.log("Object store deleted");        
     }
 
     //on error
@@ -83,6 +83,7 @@ $(document).on("click", "button.deletquiz", function () {
 });
 
 $("#addTitle").submit(function () {
+
     title = document.querySelector('#quizTitleVal').value;
     if (title == "" || title == null) {
         alert("Title cannot be empty");
@@ -102,6 +103,8 @@ $("#addTitle").submit(function () {
         }
 
         request.onsuccess = function (e) {
+                //hide the table    
+                $('#hidetable').toggle("slide");
             console.log("db open for first request to get the version"); //this is to get the version 
             db = e.target.result;
             dbOpen = true;
@@ -163,6 +166,10 @@ $("#addTitle").submit(function () {
             } else {
                 alert("This quiz has a similar name to an existing quiz");
             }
+        }
+
+        request.onupgradeneeded = function() {
+            alert("Upgrade should not had been called");
         }
     }
 
