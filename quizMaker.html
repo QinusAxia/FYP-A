@@ -1,25 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Nexus Website Menu</title>
-    <meta name="description" content="A sidebar menu as seen on the Google Nexus 7 website" />
-    <meta name="keywords" content="google nexus 7 menu, css transitions, sidebar, side menu, slide out menu" />
-    <meta name="author" content="Codrops" />
+    <title>Quiz Maker</title>
     <!--    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />-->
 
-    <link rel="shortcut icon" href="../favicon.ico">
+    <!-- <link rel="shortcut icon" href="../favicon.ico"> -->
 
-    <script src="js/modernizr.custom.js"></script>
     <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
+    <!-- <script src="js/modernizr.custom.js"></script>     
     <link rel="stylesheet" href="custom.css">
-
     <link rel="stylesheet" type="text/css" href="css/normalize.css" />
     <link rel="stylesheet" type="text/css" href="css/demo.css" />
-    <link rel="stylesheet" type="text/css" href="css/component.css" />
+    <link rel="stylesheet" type="text/css" href="css/component.css" /> -->
 </head>
 <style>
     .thumb {
@@ -30,7 +26,7 @@
 
 <body>
     <div class="container">
-        <ul id="gn-menu" class="gn-menu-main" style="z-index: 999">
+        <!-- <ul id="gn-menu" class="gn-menu-main" style="z-index: 999">
             <li class="gn-trigger">
                 <a class="gn-icon gn-icon-menu"><span>Menu</span></a>
                 <nav class="gn-menu-wrapper">
@@ -48,14 +44,14 @@
                             <li><a class="gn-icon gn-icon-archive" href="accountsetting.html">Admin Account Setting</a></li>
                             <li><a class="gn-icon gn-icon-archive" href="login.html">Student Account Setting</a></li>
                         </ul>
-                    </div><!-- /gn-scroller -->
+                    </div>
                 </nav>
             </li>
             <li style="color: black; ">Quiz</li>
         </ul>
         <header style="background-color:white">
         </header>
-        <br>
+        <br> -->
         <h1>Quiz Maker</h1>
         <p>Please give this quiz a name/title first. The name should not contain special characters like comma or
             apostrophy</p>
@@ -68,9 +64,16 @@
                 </div>
             </div>
         </form>
-        <div class="newQuest"></div>
+        <div class="newQuest">
+            <form onsubmit="return false"></form>
 
-        <button class="btn btn-outline-primary" id="newStuff">Create new Question</button>
+
+            <button class="btn btn-secondary" id="newStuff">Add another Question</button>
+            <button class="btn btn-danger" id="removeStuff">Delete Last Question</button>
+            <button class="btn btn-primary" id="saveQuestionBtn">Save Quiz</button>
+        </div>
+
+        
 
         <div id="hidetable">
         <div id="quizTable">
@@ -80,9 +83,9 @@
                         <!-- <caption>Product List</caption>  -->
                         <thead>
                             <tr class="bg-secondary text-white">
-                                <!-- <th>ID</th> -->                                
+                                <!-- <th>ID</th> -->
                                 <th>All quizes</th>
-                                <th>Actions</th>                                
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -109,20 +112,21 @@
         window.onload = loadJSON("js/account.js")
 
     </script> -->
-    <script src="js/classie.js"></script>
-    <script src="js/gnmenu.js"></script>
+
+    <!-- <script src="js/classie.js"></script>
+    <script src="js/gnmenu.js"></script> -->
     <!-- Angular JS -->
-    <script src="js/angular.min.js"></script>
+    <!-- <script src="js/angular.min.js"></script> -->
     <!-- Your Controller -->
     <!-- <script src="js/importIDB.js"></script> -->
     <!--    <script src="js/textbook-app2.js"></script>-->
     <script src="jquery-3.4.0.js"></script>
     <script src="bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
-    <script src="localforage.min.js"></script>
+    <!-- <script src="localforage.min.js"></script> -->
     <script src="quizMaker.js"></script>
 
     <script>
-        new gnMenu(document.getElementById('gn-menu'));
+        // new gnMenu(document.getElementById('gn-menu'));
     </script>
 </body>
 
