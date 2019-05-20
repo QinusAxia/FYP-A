@@ -251,16 +251,18 @@ function displayMySubmission(currentTitle2, user) {
                 submissionsec.appendChild(objd);
                 submissionsec.appendChild(objd);
                 submissionsec.appendChild(ans);
+                
+                if((user.substr(user.length -8)) == "(marked)"){
+                    var stat = document.createElement('p');
+                    stat.innerHTML = status;
+                    submissionsec.appendChild(stat);
 
-                var stat = document.createElement('p');
-                stat.innerHTML = status;
-                submissionsec.appendChild(stat);
+                    var commenttext = document.createElement('P');
+                    commenttext.innerHTML = "<strong>Comment: </strong>" + commentgiven;
 
-                var commenttext = document.createElement('P');
-                commenttext.innerHTML = "<strong>Comment: </strong>" + commentgiven;
-
-                submissionsec.appendChild(commenttext);
-
+                    submissionsec.appendChild(commenttext);
+                }
+                
                 var hr = document.createElement('hr');
                 submissionsec.appendChild(hr);
 
@@ -277,16 +279,17 @@ function displayMySubmission(currentTitle2, user) {
                 submissionsec.appendChild(questitle);
                 submissionsec.appendChild(ans);
 
-                //                var label = document.createElement('label');
 
-                var stat = document.createElement('p');
-                stat.innerHTML = status;
-                submissionsec.appendChild(stat);
+                if((user.substr(user.length -8)) == "(marked)"){
+                    var stat = document.createElement('p');
+                    stat.innerHTML = status;
+                    submissionsec.appendChild(stat);
 
-                var commenttext = document.createElement('P');
-                commenttext.innerHTML = "<strong>Comment: </strong>" + commentgiven;
+                    var commenttext = document.createElement('P');
+                    commenttext.innerHTML = "<strong>Comment: </strong>" + commentgiven;
 
-                submissionsec.appendChild(commenttext);
+                    submissionsec.appendChild(commenttext);
+                }
 
                 var hr = document.createElement('hr');
                 submissionsec.appendChild(hr);
