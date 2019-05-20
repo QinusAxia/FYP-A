@@ -18,10 +18,22 @@ function loadDatabase() {
 }
 
 function gotData(data) {
+    var mylogin = document.getElementById('myLogin');
+
+    while (mylogin.hasChildNodes()) {
+        mylogin.removeChild(mylogin.firstChild);
+    }
+    
+    var homeworkTitle = document.getElementById('homeworkTitle');
+
+    while (homeworkTitle.hasChildNodes()) {
+        homeworkTitle.removeChild(homeworkTitle.firstChild);
+    }
+    
     var homework = data.val();
     //    console.log(homework);
     var keys = Object.keys(homework);
-
+    
     console.log(keys);
     var mylogin = document.getElementById('myLogin');
 
@@ -131,6 +143,12 @@ function verifyUser() {
 }
 
 function displaySubmission() {
+    
+    var sublist = document.getElementById('mySubmission');
+
+    while (sublist.hasChildNodes()) {
+        sublist.removeChild(sublist.firstChild);
+    }
 
     var database = firebase.database();
     ref = database.ref('submission');
@@ -139,6 +157,12 @@ function displaySubmission() {
     function gotData4(data) {
         var subjectitle = data.val();
         var arrsub = Object.keys(subjectitle);
+        
+        var sublist = document.getElementById('mySubmission');
+
+        while (sublist.hasChildNodes()) {
+            sublist.removeChild(sublist.firstChild);
+        }
 
         console.log(arrsub);
         for (var i = 0; i < arrsub.length; i++) {
@@ -149,7 +173,7 @@ function displaySubmission() {
             p.setAttribute('style', 'font-weight: bold; font-size:20px;')
 
             var sublist = document.getElementById('mySubmission');
-            mySubmission.appendChild(p);
+            sublist.appendChild(p);
 
             ref = database.ref('submission/' + arrsub[i]);
             ref.on('value', gotData3, errData3);
@@ -178,7 +202,7 @@ function displaySubmission() {
                         viewStudent.appendChild(p);
 
                         var sublist = document.getElementById('mySubmission');
-                        mySubmission.appendChild(viewStudent);
+                        sublist.appendChild(viewStudent);
                     }
                 }
                 
@@ -218,6 +242,11 @@ function displayMySubmission(currentTitle2, user) {
             var answer = studentquestion[k].answer;
             var commentgiven = studentquestion[k].comment;
             var status = studentquestion[k].status;
+            
+            
+            var h1 = document.createElement("h1");
+            h1.appendChild(document.createTextNode("Question " + (i + 1) + ": " + question));
+            submissionsec.appendChild(h1);
 
             console.log(question);
 
@@ -228,9 +257,9 @@ function displayMySubmission(currentTitle2, user) {
                 var d = studentquestion[k].D;
                 console.log(question, questype, answer, a, b, c, d);
 
-                var questitle = document.createElement('p');
-                questitle.setAttribute('style', 'font-weight:bold');
-                questitle.innerHTML = question;
+//                var questitle = document.createElement('p');
+//                questitle.setAttribute('style', 'font-weight:bold');
+//                questitle.innerHTML = question;
                 var obja = document.createElement('p');
                 var objb = document.createElement('p');
                 var objc = document.createElement('p');
@@ -244,7 +273,7 @@ function displayMySubmission(currentTitle2, user) {
                 var ans = document.createElement('p');
                 ans.innerHTML = '<strong>Selected Answer: </strong>' + answer;
 
-                submissionsec.appendChild(questitle);
+//                submissionsec.appendChild(questitle);
                 submissionsec.appendChild(obja);
                 submissionsec.appendChild(objb);
                 submissionsec.appendChild(objc);
@@ -269,14 +298,14 @@ function displayMySubmission(currentTitle2, user) {
 
 
             } else {
-                var questitle = document.createElement('p');
-                questitle.setAttribute('style', 'font-weight:bold');
-                questitle.innerHTML = question;
+//                var questitle = document.createElement('p');
+//                questitle.setAttribute('style', 'font-weight:bold');
+//                questitle.innerHTML = question;
 
                 var ans = document.createElement('p');
                 ans.innerHTML = '<strong>Selected Answer: </strong>' + answer;
 
-                submissionsec.appendChild(questitle);
+//                submissionsec.appendChild(questitle);
                 submissionsec.appendChild(ans);
 
 
@@ -319,6 +348,12 @@ function displayHomework(keys) {
     ref.on('value', gotData2, errData2);
 
     function gotData2(data) {
+        
+        var homeworkSection = document.getElementById('homeworkSection');
+
+        while (homeworkSection.hasChildNodes()) {
+            homeworkSection.removeChild(homeworkSection.firstChild);
+        }
 
         var questionkey = data.val();
         var keys = Object.keys(questionkey);
