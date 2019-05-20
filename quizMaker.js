@@ -6,8 +6,11 @@ var dbversion;
 
 //hide the add question button first
 document.getElementById("quizTitleVal").value = "";
-var x = document.getElementById("newStuff");
-x.style.display = "none";
+
+//hide elements initially
+$("#removeStuff").hide();
+$("#newStuff").hide();
+$("#saveQuestionBtn").hide();
 
 window.onload = function () { //this function will load the table with the list of quizes in the database
     if (dbOpen) {
@@ -15,18 +18,14 @@ window.onload = function () { //this function will load the table with the list 
         console.log("db closed in before opening new request");
     }
 
-    // if (localStorage.getItem("dbversion") === null) {
-    //     localStorage.setItem("dbversion", 1);
-    // } // localStorage.setItem('dbversion',parseInt(localStorage.getItem('dbversion'))+1);
-    // dbversion = parseInt(localStorage.getItem('dbversion'));
-    
     var request = indexedDB.open('QuizMaker');
+
     request.onsuccess = function (e) {
+        dbOpen = true;
         db = e.target.result;
         console.log("db open for first request to load the table");
         dbversion = db.version;
         console.log(dbversion);
-        dbOpen = true;
         var allStoreNames = new Array();
         var objectStoreNames = db.objectStoreNames;
         for (var i = 0; i < objectStoreNames.length; i++) { //get all objectstore names and put them into an array
@@ -49,7 +48,7 @@ window.onload = function () { //this function will load the table with the list 
 };
 
 $(document).on("click", "button.deletquiz", function () {
-    var test = $(this).parent().parent().find("td.objname").html();    
+    var test = $(this).parent().parent().find("td.objname").html();
 
     if (dbOpen) {
         db.close();
@@ -57,19 +56,20 @@ $(document).on("click", "button.deletquiz", function () {
         console.log("db closed in before opening new request to delete obstore");
     }
 
-    dbversion +=1; console.log(dbversion);    
+    dbversion += 1;
+    console.log(dbversion);
     var request = indexedDB.open('QuizMaker', dbversion);
-    
-    request.onupgradeneeded = function (event) {        
+
+    request.onupgradeneeded = function (event) {
         db = event.target.result;
         console.log(test);
         db.deleteObjectStore(test);
         console.log(test + " deleted");
     }
-    
-    request.onsuccess = function (event) {        
+
+    request.onsuccess = function (event) {
         dbOpen = true;
-        db = event.target.result;        
+        db = event.target.result;
         console.log("Database upgrade success version: " + dbversion)
     }
 
@@ -83,13 +83,10 @@ $(document).on("click", "button.deletquiz", function () {
 });
 
 $("#addTitle").submit(function () {
-
     title = document.querySelector('#quizTitleVal').value;
     if (title == "" || title == null) {
         alert("Title cannot be empty");
     } else {
-
-        $("#quizTable tbody").append('<tr><td class="objname">' + title + '<td><button class="btn btn-warning deletquiz">Delete</button> <button class="btn btn-secondary editbtn">Edit</button></td>/td></tr>');
 
         if (dbOpen) {
             db.close();
@@ -103,8 +100,6 @@ $("#addTitle").submit(function () {
         }
 
         request.onsuccess = function (e) {
-                //hide the table    
-                $('#hidetable').toggle("slide");
             console.log("db open for first request to get the version"); //this is to get the version 
             db = e.target.result;
             dbOpen = true;
@@ -119,7 +114,7 @@ $("#addTitle").submit(function () {
             console.log(allStoreNames);
             //code below is validation: making sure its not empty and does not already exist in the database
             for (let index = 0; index < allStoreNames.length; index++) {
-                console.log(allStoreNames[index]);
+                // console.log(allStoreNames[index]);
                 if (title == allStoreNames[index]) {
                     notExist = false;
                     console.log(notExist);
@@ -133,7 +128,7 @@ $("#addTitle").submit(function () {
                     console.log("db closed after checking version. Preparing for update");
                 }
                 dbversion += 1;
-                console.log(dbversion);
+                console.log("dbversion: " + dbversion);
                 var secondRequest = indexedDB.open('QuizMaker', dbversion); //opening higher version
                 console.log("db open for secondrequest to add a new quiz: Upgrade needed");
                 secondRequest.onupgradeneeded = function (e) {
@@ -150,14 +145,19 @@ $("#addTitle").submit(function () {
                 secondRequest.onsuccess = function (e) {
                     dbOpen = true;
                     console.log("Quiz succesfully added");
+                    //hide the table    
+                    $('#hidetable').toggle("slide");
                     //then make changes to html
-                    $("#addTitle").replaceWith('<h3>' + title + '</h3>');
-                    x.style.display = "block"; //show the button 
+                    $("#quizTable tbody").append('<tr><td class="objname">' + title + '<td><button class="btn btn-warning deletquiz">Delete</button> <button class="btn btn-secondary editbtn">Edit</button></td>/td></tr>');
+                    $("#addTitle").replaceWith('<h3 class="getTitle">' + title + '</h3>');
+                    $("#removeStuff").show();
+                    $("#newStuff").show();
+                    $("#saveQuestionBtn").show();
+
                     //replace the title form with another
                     var questionID = title.replace(/\s/g, '') + increment; //removing strings from the title and add increment to create unique question ID
-                    $("div.newQuest").append("<form class='addQuestion' onsubmit='return false'> <div class='question'> <div> <p> Question " + increment + "</p><label for='test'> Marks<input type='number' id='test'></label></div> <div class='col-md-12'><input type='text' name='questionBox' placeholder='Begin Typing Question here' class='form-control input-lg'></div> <div class='col-md-8'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect' value='A' checked> </div> </div> <input type='text' id='" + questionID + "A' name='answer' placeholder='Option A' class='form-control A'> </div> </div> <div class='col-md-8'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect' value='B'> </div> </div> <input type='text' id='" + questionID + "B' name='answer' placeholder='Option B' class='form-control B'> </div> </div> <div class='col-md-8'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect' value='C'> </div> </div> <input type='text' id='" + questionID + "C' name='answer' placeholder='Option C' class='form-control C'> </div> </div> <div class='col-md-8'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect' value='D'> </div> </div> <input type='text' id='" + questionID + "D' name='answer' placeholder='Option D' class='form-control D'> </div> </div> <div class='col-md-12'> <button type='submit' class='saveQuestionBtn btn btn-primary'>Save Question</button> <button type='reset' class='btn btn-secondary'> Reset Question</button> </div> </div> </form>");
-                    console.log(questionID);
-                    console.log(title);
+                    $("div.newQuest form").append(" <div id='question" + increment + "' > <div> <h5> Question " + increment + "</h5> </div> <div class='col-md-12'> <textarea class='form-control' id='q" + increment + "' rows='2' placeholder='Type question here'></textarea> </div> <div class='col-md-10'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect" + questionID + "' value='A' checked> </div> </div> <input type='text' id='" + questionID + "A' name='answer' placeholder='Option A' class='form-control A'> </div> </div> <div class='col-md-10'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect" + questionID + "' value='B'> </div> </div> <input type='text' id='" + questionID + "B' name='answer' placeholder='Option B' class='form-control B'> </div> </div> <div class='col-md-10'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect" + questionID + "' value='C'> </div> </div> <input type='text' id='" + questionID + "C' name='answer' placeholder='Option C' class='form-control C'> </div> </div> <div class='col-md-10'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect" + questionID + "' value='D'> </div> </div> <input type='text' id='" + questionID + "D' name='answer' placeholder='Option D' class='form-control D'> </div> </div> </div>");
+                    console.log("Current Qid: " + questionID);
                 };
 
                 secondRequest.onerror = function (e) {
@@ -168,7 +168,7 @@ $("#addTitle").submit(function () {
             }
         }
 
-        request.onupgradeneeded = function() {
+        request.onupgradeneeded = function () {
             alert("Upgrade should not had been called");
         }
     }
@@ -179,58 +179,130 @@ $("#addTitle").submit(function () {
 $("#newStuff").click(function () {
     increment += 1;
     var questionID = title.replace(/\s/g, '') + increment;
-    $("div.newQuest").append("<form class='addQuestion' onsubmit='return false'> <div class='question'> <div> <p> Question " + increment + "</p><label for='test'> Marks<input type='number' id='test'></label></div> <div class='col-md-12'><input type='text' name='questionBox' placeholder='Begin Typing Question here' class='form-control input-lg'></div> <div class='col-md-8'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect' value='A' checked> </div> </div> <input type='text' id='" + questionID + "A' name='answer' placeholder='Option A' class='form-control A'> </div> </div> <div class='col-md-8'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect' value='B'> </div> </div> <input type='text' id='" + questionID + "B' name='answer' placeholder='Option B' class='form-control B'> </div> </div> <div class='col-md-8'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect' value='C'> </div> </div> <input type='text' id='" + questionID + "C' name='answer' placeholder='Option C' class='form-control C'> </div> </div> <div class='col-md-8'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect' value='D'> </div> </div> <input type='text' id='" + questionID + "D' name='answer' placeholder='Option D' class='form-control D'> </div> </div> <div class='col-md-12'> <button type='submit' class='saveQuestionBtn btn btn-primary'>Save Question</button> <button type='reset' class='btn btn-secondary'> Reset Question</button> </div> </div> </form>");
+    $("div.newQuest form").append("  <div id='question" + increment + "' > <div> <h5> Question " + increment + "</h5> </div> <div class='col-md-12'> <textarea class='form-control' id='q" + increment + "' rows='2' placeholder='Type question here'></textarea> </div> <div class='col-md-10'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect" + questionID + "' value='A' checked> </div> </div> <input type='text' id='" + questionID + "A' name='answer' placeholder='Option A' class='form-control A'> </div> </div> <div class='col-md-10'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect" + questionID + "' value='B'> </div> </div> <input type='text' id='" + questionID + "B' name='answer' placeholder='Option B' class='form-control B'> </div> </div> <div class='col-md-10'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect" + questionID + "' value='C'> </div> </div> <input type='text' id='" + questionID + "C' name='answer' placeholder='Option C' class='form-control C'> </div> </div> <div class='col-md-10'> <div class='input-group'> <div class='input-group-prepend'> <div class='input-group-text'> <input type='radio' name='radioCorrect" + questionID + "' value='D'> </div> </div> <input type='text' id='" + questionID + "D' name='answer' placeholder='Option D' class='form-control D'> </div> </div> </div>");
     console.log(questionID);
 });
 
-$(document).on("click", "button.saveQuestionBtn", function () {
-    //get the values from the input
-    var quesID = increment;
-    var ques = $(this).parent().parent().find("input[name=questionBox]").val();
-    var a = $(this).parent().parent().find("input.A").val();
-    var b = $(this).parent().parent().find("input.B").val();
-    var c = $(this).parent().parent().find("input.C").val();
-    var d = $(this).parent().parent().find("input.D").val();
-    var ans = $(this).parent().parent().find("input[name=radioCorrect]:checked").parent().parent().parent().find("input[type=text]").val();
-    var mark = $(this).parent().parent().find("input[type=number]").val();
-
-    var fullquestion = {
-        questionid: quesID,
-        question: ques,
-        A: a,
-        B: b,
-        C: c,
-        D: d,
-        correctAns: ans,
-        marks: mark
+$(document).on("click", "button#removeStuff", function () {
+    //find questionID div delete it, use the latest updates question ID
+    if (increment > 1) {
+        $("#question" + increment + "").remove();
+        //decrement question ID
+        increment -= 1;
+    } else {
+        alert("Quiz must have at least 1 question");
     }
+});
 
-    console.log(fullquestion); //test to see if data is written correctly
-
-    if (dbOpen) {
-        db.close()
-        console.log("closing database connection to reopen");
-    }
-
-    var request = indexedDB.open('QuizMaker', dbversion);
-    request.onupgradeneeded = function (e) {
-        console.log("Upgrade needed should NOT have been called");
-    }
-    request.onsuccess = function (e) {
-        db = e.target.result;
-        console.log(title + " in " + db.version);
-        var tx = db.transaction(title, "readwrite");
-        tx.onerror = function (e) {
-            alert(` Error! ${e.target.error}  `);
+$(document).on("click", "button#saveQuestionBtn", function () {
+    //This part uses a callback method to make sure it is executed in order
+    //or else function x will be executed while function y is executing at the same time
+    let clearStore = function () {
+        if (dbOpen) {
+            db.close()
+            console.log("closing database connection to reopen");
         }
-        var quizQuestion = tx.objectStore(title);
-        quizQuestion.put(fullquestion, quesID);
+
+        var clearRequest = indexedDB.open('QuizMaker', dbversion);
+        clearRequest.onsuccess = function (e) {
+            db = clearRequest.result;
+            // open a read/write db transaction, ready for clearing the data
+            var transaction = db.transaction(title, "readwrite");
+
+            // report on the success of the transaction completing, when everything is done
+            transaction.oncomplete = function (event) {
+                console.log("clear " + title + "obj transaction done");
+                filldata();
+            };
+
+            transaction.onerror = function (event) {
+                console.log("Error: " + transaction.error);
+            };
+
+            // create an object store on the transaction
+            var objectStore = transaction.objectStore(title);
+
+            // Make a request to clear all the data out of the object store
+            var objectStoreRequest = objectStore.clear();
+
+            objectStoreRequest.onsuccess = function (event) {
+                // report the success of our request
+                console.log(title + " objStore is emptied");
+            };
+        }
+        clearRequest.onerror = function (e) {
+            console.log("Error: " + e.target.errorCode);
+        }
+        clearRequest.onupgradeneeded = function (e) {
+            console.log("WARNING: UPGRADE CALL WHEN NOT NEEDED");
+        }
+
     }
 
-    request.onerror = function (e) {
-        console.log("Error: " + e.target.errorCode);
+    let filldata = async function () {
+        for (let index = 0; index <= increment; index++) {
+
+            var quesID = index;
+
+            var ques = $("#question" + index + "").find("textarea").val();
+            var a = $("#question" + index + "").find("input.A").val();
+            var b = $("#question" + index + "").find("input.B").val();;
+            var c = $("#question" + index + "").find("input.C").val();
+            var d = $("#question" + index + "").find("input.D").val();        
+            var ans = $("#question" + index + "").find("input[name=radioCorrect" + quesID + "]:checked").val(); //needs fixing: undefined
+
+            var fullquestion = {
+                questionid: quesID,
+                question: ques,
+                A: a,
+                B: b,
+                C: c,
+                D: d,
+                correctAns: ans,
+            }
+            console.log(fullquestion); //test to see if data is written correctly       
+
+            await promise;
+
+            var promise = new Promise(function (resolve, reject) {
+                if (dbOpen) {
+                    db.close()
+                    // console.log("closing database connection to reopen");
+                }
+    
+                var request = indexedDB.open('QuizMaker', dbversion);
+                request.onupgradeneeded = function (e) {
+                    console.log("Upgrade needed should NOT have been called");
+                }
+                request.onsuccess = function (e) {
+                    db = e.target.result;
+                    // console.log(title + " in " + db.version);
+                    var tx = db.transaction(title, "readwrite");
+                    tx.onerror = function (e) {
+                        alert(` Error! ${e.target.error}  `);
+                    }
+                    var quizQuestion = tx.objectStore(title);
+                    quizQuestion.put(fullquestion, quesID);resolve("Stuff worked!");
+                    
+                    if (quesID == increment) {
+                        alert("Quiz Saved");
+                    }
+                    
+                }
+    
+                request.onerror = function (e) {
+                    console.log("Error: " + e.target.errorCode);
+                    reject(Error("It broke"));
+                }                
+                
+            });
+
+        }
     }
 
+
+    //execute in order of
+    clearStore();
 
 });
 
