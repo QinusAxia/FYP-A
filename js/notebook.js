@@ -164,7 +164,7 @@ function startT(event) {
 }
 
 function endT(event) {
-  if (event.touches.length == 1) {
+  if (!event.touches[0].length) {
 		// event.preventDefault();
     shouldDraw = false;
   }
@@ -252,7 +252,7 @@ var dataIncurrentNotebook;
 document.addEventListener('DOMContentLoaded', () => {
     console.log('dom content loaded');
 
-    document.querySelector('#save').addEventListener('change', doFile);
+    document.querySelector('#save').addEventListener('click', doFile);
     // //    document.querySelector('#testImageBtn').addEventListener('click', doImageTestWithRecordToLoad);
     // //    document.querySelector('#recordToLoad').addEventListener('select', doImageTestWithOption, false);
     document.querySelector('#nextPage').addEventListener('click', doImageTestWithNextBtn);
@@ -270,7 +270,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initDb() {
-
 	let request = indexedDB.open('notebook');
 
 	request.onerror = function (e) {
@@ -303,81 +302,122 @@ function initDb() {
 					page.appendChild(element);
 					console.log(element);
 			}
+
+			// addReq.onsuccess = function(){
+			// 	var cv = document.getElementById('myCanvas');
+
+			// 	let bits = cv.toDataURL("image/png");
+			// 	let ob = {
+			// 			created: new Date(),
+			// 			data: bits
+			// 	};
+
+			// 	let trans2 = db.transaction([currentNotebook], 'readwrite');
+			// 	let addReq2 = trans2.objectStore(currentNotebook).add(ob);
+
+			// 	addReq2.onerror = function (e) {
+			// 			console.log('error storing data');
+			// 			console.error(e);
+			// 	}
+			// }
 	}
 }
 
 function doFile(e) {
 	console.log('change event fired for input field');
 	var img = new Image();
-	let file = e.target.files[0];
-	var reader = new FileReader();
-					// reader.readAsDataURL(file);
-	reader.readAsBinaryString(file);
+	// let file = e.target.files[0];
+	// var reader = new FileReader();
+	// 				// reader.readAsDataURL(file);
+	// reader.readAsBinaryString(file);
 
-	// var cv = document.getElementById('myCanvas')
+	var cv = document.getElementById('myCanvas');
 
+	let bits = cv.toDataURL("image/png");
+	let ob = {
+			created: new Date(),
+			data: bits
+	};
 
-	reader.onload = function (e) {
-			//alert(e.target.result);
-			let bits = e.target.result;
-			// let bits = file;
-			let ob = {
-					created: new Date(),
-					data: bits
-			};
+	let trans = db.transaction([currentNotebook], 'readwrite');
+	let addReq = trans.objectStore(currentNotebook).add(ob);
 
-			let trans = db.transaction([currentNotebook], 'readwrite');
-			let addReq = trans.objectStore(currentNotebook).add(ob);
+	addReq.onerror = function (e) {
+			console.log('error storing data');
+			console.error(e);
+	}
+	
+	// //Save page when choosen
+	// var cv = document.getElementById('myCanvas');
+	// let bits = cv.toDataURL("image/png");
+	
+	// let ob = {
+	// 		created: new Date(),
+	// 		data: bits
+	// };
+	
+	// let trans = db.transaction([currentNotebook], 'readwrite');
+	// var req2 = trans.objectStore(currentNotebook);
+	// var getAllKeysRequest = req2.getAllKeys();
 
-			addReq.onerror = function (e) {
-					console.log('error storing data');
-					console.error(e);
-			}
+	// if (trans.objectStore(currentNotebook).get(getAllKeysRequest.result[currentPage]) != null){
+	// 	let key = trans.objectStore(currentNotebook).get(getAllKeysRequest.result[currentPage]);
+	// 	key.onsuccess = function() {
+	// 			let _key = key.result;
+	// 			ob.id = _key;
+		
+	// 			let editReq = trans.objectStore(currentNotebook).put(ob, key);
+	// 			editReq.onerror = function (e) {
+	// 					console.log('error storing data');
+	// 					console.error(e);
+	// 			}
+	// 	}
+	// }
 
-			trans.oncomplete = function (e) {
-					let canvas = document.querySelector('#myCanvas');
-					let trans = db.transaction([currentNotebook], 'readonly');
-					var req2 = trans.objectStore(currentNotebook);
-					var getAllKeysRequest = req2.getAllKeys();
-					getAllKeysRequest.onsuccess = function () {
-							console.log(getAllKeysRequest.result);
-							var countRequest = req2.count();
-							countRequest.onsuccess = function () {
-									if (countRequest.result != 0) {
-											currentPage = countRequest.result - 1;
-											let req = trans.objectStore(currentNotebook).get(getAllKeysRequest.result[currentPage]);
-											document.getElementById("page").textContent = "Page: " + (currentPage + 1);
-											req.onsuccess = function (e) {
-													let record = e.target.result;
-													if (record != undefined) {
-															console.log('get success', record);
+	trans.oncomplete = function (e) {
+			let canvas = document.querySelector('#myCanvas');
+			let trans = db.transaction([currentNotebook], 'readonly');
+			var req2 = trans.objectStore(currentNotebook);
+			var getAllKeysRequest = req2.getAllKeys();
+			getAllKeysRequest.onsuccess = function () {
+					console.log(getAllKeysRequest.result);
+					var countRequest = req2.count();
+					countRequest.onsuccess = function () {
+							if (countRequest.result != 0) {
+									currentPage = countRequest.result - 1;
+									let req = trans.objectStore(currentNotebook).get(getAllKeysRequest.result[currentPage]);
+									document.getElementById("page").textContent = "Page " + (currentPage + 1);
+									req.onsuccess = function (e) {
+											let record = e.target.result;
+											if (record != undefined) {
+													console.log('get success', record);
 
-															img.src = 'data:image/png;base64,' + btoa(record.data);
-															img.onload = imageLoaded;
-															
-															function imageLoaded() {
-																const dpr = window.devicePixelRatio || 2;
-																	canvas.width = img.width * dpr;
-																	canvas.height = img.height * dpr;
-																	var ctx = canvas.getContext("2d");
-																	ctx.drawImage(img,0,0);
-															}
-													} else {
-															// image.src = "";
+													img.src = 'data:image/png;base64,' + btoa(record.data);
+													img.onload = imageLoaded;
+													
+													function imageLoaded() {
+														const dpr = window.devicePixelRatio || 2;
+															canvas.width = img.width * dpr;
+															canvas.height = img.height * dpr;
+															var ctx = canvas.getContext("2d");
+															ctx.drawImage(img,0,0);
 													}
-
-													document.getElementById("save").value = "";
+											} else {
+													// image.src = "";
 											}
-									} else {
-											img.src = "";
-											console("hhehehe");
+
+											document.getElementById("save").value = "";
 									}
+							} else {
+									img.src = "";
+									console("hhehehe");
 							}
 					}
-					console.log('data stored');
-					alert("data stored");
 			}
+			console.log('data stored');
+			alert("data stored");
 	}
+	// }
 }
 
 function createNotebook() {
@@ -448,14 +488,15 @@ function selectNotebook(id) {
 		countRequest.onsuccess = function () {
 				if (countRequest.result != 0) {
 						currentPage = countRequest.result - 1;
+						document.getElementById("nextPage").innerHTML = "Add"
 						let req = trans.objectStore(currentNotebook).get(getAllKeysRequest.result[currentPage]);
-						document.getElementById("page").textContent = "Page: " + (currentPage + 1);
+						document.getElementById("page").textContent = "Page " + (currentPage + 1);
 						req.onsuccess = function (e) {
 								let record = e.target.result;
 								if (record != undefined) {
 										console.log('get success', record);
 
-										img.src = 'data:image/png;base64,' + btoa(record.data);
+										img.src = record.data;
 										img.onload = imageLoaded;
 										
 										function imageLoaded() {
@@ -486,13 +527,36 @@ function doImageTestWithNextBtn() {
 	var img = new Image();
 	let canvas = document.querySelector('#myCanvas');
 	var transaction = db.transaction([currentNotebook], 'readonly');
-	var objectStore = transaction.objectStore(currentNotebook);
-
 	var req2 = transaction.objectStore(currentNotebook);
 	var getAllKeysRequest = req2.getAllKeys();
+
+	//Find page thing
 	getAllKeysRequest.onsuccess = function () {
-			console.log(getAllKeysRequest.result);
-			//        currentPage = 1;
+			console.log("allkey:" + getAllKeysRequest.result);
+			console.log("currentkey: " + getAllKeysRequest.result[currentPage]);
+
+				// //Save page when choosen
+				// var cv = document.getElementById('myCanvas');
+				// let bits = cv.toDataURL("image/png");
+				
+				// let ob = {
+				// 		created: new Date(),
+				// 		data: bits
+				// };
+				
+				// let trans = db.transaction([currentNotebook], 'readwrite');
+				
+				// let key = trans.objectStore(currentNotebook).get(getAllKeysRequest.result[currentPage]);
+				// key.onsuccess = function() {
+				// 		let _key = key.result;
+				// 		ob.id = _key;
+				
+				// 		let editReq = trans.objectStore(currentNotebook).put(ob, key);
+				// 		editReq.onerror = function (e) {
+				// 				console.log('error storing data');
+				// 				console.error(e);
+				// 		}
+				// }
 
 			var countRequest = req2.count();
 			countRequest.onsuccess = function () {
@@ -501,16 +565,21 @@ function doImageTestWithNextBtn() {
 									currentPage += 1;
 									console.log(currentPage);
 							}
-							//                currentPage += 1;
+							if(currentPage == countRequest.result - 1){
+									document.getElementById("nextPage").innerHTML = "Add";
+									console.log("current1 = " + currentPage);
+							}
+							
 							let req = transaction.objectStore(currentNotebook).get(getAllKeysRequest.result[currentPage]);
 							document.getElementById("page").textContent = "Page " + (currentPage + 1);
 
 							req.onsuccess = function (e) {
 									let record = e.target.result;
 									if (record != undefined) {
-											console.log('get success', record);
+											console.log('get success' , record);
 
-											img.src = 'data:image/png;base64,' + btoa(record.data);
+											//Load image
+											img.src = record.data;
 											img.onload = imageLoaded;
 											
 											function imageLoaded() {
@@ -520,6 +589,7 @@ function doImageTestWithNextBtn() {
 													var ctx = canvas.getContext("2d");
 													ctx.drawImage(img,0,0);
 											}
+
 									} else {
 											img.src = "";
 									}
@@ -548,6 +618,7 @@ function doImageTestWithPreviousBtn() {
 					if (countRequest.result != 0) {
 							if (currentPage > 0) {
 									currentPage -= 1;
+									document.getElementById("nextPage").innerHTML = "Next"
 									console.log(currentPage);
 							}
 							let req = transaction.objectStore(currentNotebook).get(getAllKeysRequest.result[currentPage]);
@@ -557,7 +628,7 @@ function doImageTestWithPreviousBtn() {
 									if (record != undefined) {
 											console.log('get success', record);
 											
-											img.src = 'data:image/png;base64,' + btoa(record.data);
+											img.src = record.data;
 											img.onload = imageLoaded;
 											
 											function imageLoaded() {
