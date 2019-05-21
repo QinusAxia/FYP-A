@@ -34,7 +34,8 @@ window.onload = function () { //this function will load the table with the list 
         //fill the table        
         for (let index = 0; index < allStoreNames.length; index++) {
             $("#quizTable tbody").append('<tr><td class="objname">' + allStoreNames[index] + '<td><button class="btn btn-warning deletquiz">Delete</button> <button class="btn btn-secondary editbtn">Edit</button></td>/td></tr>');
-        }
+        } //paginate
+            $('#table').DataTable();
     }
     request.onupgradeneeded = function (event) {
         if (dbversion != 1) {
@@ -149,7 +150,8 @@ $("#addTitle").submit(function () {
                     $('#hidetable').toggle("slide");
                     //then make changes to html
                     $("#quizTable tbody").append('<tr><td class="objname">' + title + '<td><button class="btn btn-warning deletquiz">Delete</button> <button class="btn btn-secondary editbtn">Edit</button></td>/td></tr>');
-                    $("#addTitle").replaceWith('<h3 class="getTitle">' + title + '</h3>');
+                    $(".getTitle").replaceWith('<h3 class="getTitle">' + title + '</h3>');
+                    $("#addTitle").toggle("slide");
                     $("#removeStuff").show();
                     $("#newStuff").show();
                     $("#saveQuestionBtn").show();
@@ -194,7 +196,7 @@ $(document).on("click", "button#removeStuff", function () {
     }
 });
 
-$(document).on("click", "button#saveQuestionBtn", function () {
+$(document).on("click", "button#saveQuestionBtn", function () {        
     //This part uses a callback method to make sure it is executed in order
     //or else function x will be executed while function y is executing at the same time
     let clearStore = function () {
@@ -243,22 +245,23 @@ $(document).on("click", "button#saveQuestionBtn", function () {
         for (let index = 0; index <= increment; index++) {
 
             var quesID = index;
+            var trimmedID = title.replace(/\s/g, '') + quesID;   //this is solely for var ans only, cannot use index due to async 
 
             var ques = $("#question" + index + "").find("textarea").val();
             var a = $("#question" + index + "").find("input.A").val();
             var b = $("#question" + index + "").find("input.B").val();;
             var c = $("#question" + index + "").find("input.C").val();
             var d = $("#question" + index + "").find("input.D").val();        
-            var ans = $("#question" + index + "").find("input[name=radioCorrect" + quesID + "]:checked").val(); //needs fixing: undefined
+            var ans = $("#question" + index + "").find("input[name=radioCorrect" + trimmedID + "]:checked").val(); //needs fixing: undefined
 
             var fullquestion = {
                 questionid: quesID,
                 question: ques,
+                correctAns: ans,
                 A: a,
                 B: b,
                 C: c,
-                D: d,
-                correctAns: ans,
+                D: d,                
             }
             console.log(fullquestion); //test to see if data is written correctly       
 
@@ -266,8 +269,7 @@ $(document).on("click", "button#saveQuestionBtn", function () {
 
             var promise = new Promise(function (resolve, reject) {
                 if (dbOpen) {
-                    db.close()
-                    // console.log("closing database connection to reopen");
+                    db.close();
                 }
     
                 var request = indexedDB.open('QuizMaker', dbversion);
@@ -275,19 +277,22 @@ $(document).on("click", "button#saveQuestionBtn", function () {
                     console.log("Upgrade needed should NOT have been called");
                 }
                 request.onsuccess = function (e) {
-                    db = e.target.result;
-                    // console.log(title + " in " + db.version);
+                    db = e.target.result;                    
                     var tx = db.transaction(title, "readwrite");
                     tx.onerror = function (e) {
                         alert(` Error! ${e.target.error}  `);
                     }
                     var quizQuestion = tx.objectStore(title);
                     quizQuestion.put(fullquestion, quesID);resolve("Stuff worked!");
-                    
-                    if (quesID == increment) {
-                        alert("Quiz Saved");
-                    }
-                    
+
+                    console.log(index, increment);
+                    if(index == increment) {
+                        console.log("All filled");
+                        $("#clearForm").empty();
+                        $("#addTitle")[0].reset();
+                        $(".getTitle").replaceWith('<h3 class="getTitle"></h3>');
+                        increment = 1; //reset increment for new question
+                    }                                     
                 }
     
                 request.onerror = function (e) {
@@ -299,10 +304,15 @@ $(document).on("click", "button#saveQuestionBtn", function () {
 
         }
     }
-
-
     //execute in order of
     clearStore();
+
+    //reset the form and display the table
+    $("#removeStuff").hide();
+    $("#newStuff").hide();
+    $("#saveQuestionBtn").hide();
+    $('#hidetable').toggle("slide");
+    $("#addTitle").toggle("slide");
 
 });
 
