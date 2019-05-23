@@ -149,7 +149,9 @@ function move(event) {
 
 //TOUCH EVENTS
 function startT(event) {
-	// event.preventDefault();
+	if (event.touches.length == 1){
+		event.preventDefault();
+	}
 
 	shouldDraw = true;
 	
@@ -164,16 +166,17 @@ function startT(event) {
 }
 
 function endT(event) {
-  if (!event.touches[0].length) {
-		// event.preventDefault();
+  if (!event.touches.length) {
     shouldDraw = false;
   }
 }
 
 function moveT(event) {
   if (shouldDraw) {
-		// event.preventDefault();
-
+		if (event.touches.length == 1){
+			event.preventDefault();
+		}
+		
     let elementRect = event.target.getBoundingClientRect();
     theContext.lineTo(event.touches[0].clientX - elementRect.left, event.touches[0].clientY - elementRect.top);
 		theContext.stroke()

@@ -13,9 +13,9 @@
 
 <!-- <h1>NOTEBOOK MODULE</h1> -->
 <div class="row container mt-3">
-  <button type="button" id="createNotbook" class="btn btn-primary mr-2" data-toggle="modal" data-target="#ModalCreate">Create Notebook</button>
-  <button type="button" id="loadNotebook" class="btn btn-info" data-toggle="modal" data-target="#ModalChoose">Open Notebook</button>
-  <h3 id="title" class="border border-dark rounded-lg mb-0 ml-2 pr-4 pl-4">TITLE: </h3>
+  <button type="button" id="createNotbook" class="btn btn-primary mr-2 col-xs-3" data-toggle="modal" data-target="#ModalCreate">Create Notebook</button>
+  <button type="button" id="loadNotebook" class="btn btn-info col-xs-3" data-toggle="modal" data-target="#ModalChoose">Open Notebook</button>
+  <h4 id="title" class="col-xs-3 border border-dark rounded-lg mb-0 ml-2 pr-2 pl-2">TITLE: </h4>
 </div>
 <!-- NAVBAR FOR NOTEBOOK -->
 <nav class="navbar navbar-expand-md navbar-dark bg-dark row">
@@ -30,15 +30,15 @@
       </li>
 
       <li class="nav-item">
-          <button type="button" id="pen" class="btn btn-outline-light" onclick="PenType(this)">Pen</button>
+          <button type="button" id="pen" class="btn btn-outline-light" onclick="PenType(this)" data-toggle="collapse" data-target="#navbarsExample08" >Pen</button>
       </li>
 
       <li class="nav-item">
-          <button type="button" id="highlight" class="btn btn-outline-light" onclick="PenType(this)">Highlight</button>
+          <button type="button" id="highlight" class="btn btn-outline-light" onclick="PenType(this)" data-toggle="collapse" data-target="#navbarsExample08" >Highlight</button>
       </li>
 
       <li class="nav-item">
-          <button type="button" id="eraser" class="btn btn-outline-light" onclick="PenType(this)">Eraser</button>
+          <button type="button" id="eraser" class="btn btn-outline-light" onclick="PenType(this)" data-toggle="collapse" data-target="#navbarsExample08" >Eraser</button>
       </li>
         
       <li class="nav-item dropdown">
@@ -56,8 +56,8 @@
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="dropdownPaper" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Paper Type</a>
         <div class="dropdown-menu bg-dark" aria-labelledby="dropdownColor">
-          <button type="button" class="btn btn-outline-warning" onclick="ChangeBackground()">Lines Paper</button>                  
-          <button type="button" class="btn btn-outline-warning" onclick="ChangeBackground2()">Blank Paper</button>
+          <button type="button" class="btn btn-outline-warning" onclick="ChangeBackground()" data-toggle="collapse" data-target="#navbarsExample08" >Lines Paper</button>                  
+          <button type="button" class="btn btn-outline-warning" onclick="ChangeBackground2()" data-toggle="collapse" data-target="#navbarsExample08" >Blank Paper</button>
         </div>
       </li>
     </ul>

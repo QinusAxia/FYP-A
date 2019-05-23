@@ -1,8 +1,13 @@
 /* BODY CSS */
-html, body{
+html{
     width: 100%;
     height: 100%;
     margin: 0;
+}
+
+body{
+    height: 100%;
+    overflow: scroll;
 }
 
 .container-fluid {
